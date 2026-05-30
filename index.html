@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WordPress 外贸模板库</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --page: #f6f8fb;
+        --surface: #ffffff;
+        --surface-2: #f9fbfd;
+        --line: #dfe7ef;
+        --text: #172033;
+        --muted: #697586;
+        --accent: #0a7ccf;
+        --accent-dark: #075b99;
+        --accent-soft: #e7f2fb;
+        --warm: #b85c38;
+        --warm-soft: #fff1ea;
+        --success: #137c4b;
+        --success-soft: #e8f7ef;
+        --shadow: 0 18px 44px rgba(23, 32, 51, 0.09);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(180deg, #ffffff 0, var(--page) 260px),
+          var(--page);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      }
+
+      a,
+      button,
+      input {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .app {
+        min-height: 100vh;
+      }
+
+      .top-nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        display: grid;
+        grid-template-columns: auto minmax(260px, 640px) auto;
+        gap: 24px;
+        align-items: center;
+        min-height: 74px;
+        padding: 0 32px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 220px;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        background: #172033;
+        color: #fff;
+        font-weight: 900;
+      }
+
+      .search {
+        position: relative;
+        width: min(100%, 620px);
+      }
+
+      .search input {
+        width: 100%;
+        height: 46px;
+        padding: 0 16px 0 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--text);
+        outline: none;
+        box-shadow: 0 8px 24px rgba(23, 32, 51, 0.04);
+      }
+
+      .search input:focus {
+        border-color: var(--accent);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(8, 117, 201, 0.12);
+      }
+
+      .search::before {
+        content: "";
+        position: absolute;
+        left: 17px;
+        top: 50%;
+        width: 12px;
+        height: 12px;
+        border: 2px solid var(--muted);
+        border-radius: 999px;
+        transform: translateY(-58%);
+      }
+
+      .search::after {
+        content: "";
+        position: absolute;
+        left: 29px;
+        top: 29px;
+        width: 8px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--muted);
+        transform: rotate(45deg);
+      }
+
+      .nav-action {
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid #172033;
+        border-radius: 8px;
+        background: #172033;
+        color: #fff;
+        text-decoration: none;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 286px minmax(0, 1fr);
+        gap: 30px;
+        width: min(100%, 1440px);
+        margin: 0 auto;
+        padding: 34px 28px 44px;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 94px;
+        align-self: start;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+
+      .side-section {
+        padding: 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .side-section:last-child {
+        border-bottom: 0;
+      }
+
+      .side-title {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .category-button {
+        width: 100%;
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--text);
+        text-align: left;
+      }
+
+      .category-button:hover,
+      .category-button.is-active {
+        background: var(--accent-soft);
+        color: var(--accent-dark);
+      }
+
+      .category-button.is-active .count {
+        color: var(--accent-dark);
+      }
+
+      .count {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .checkbox-row {
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #344054;
+        font-size: 14px;
+      }
+
+      .checkbox-row input {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--accent);
+      }
+
+      .status-button {
+        width: 100%;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #344054;
+        text-align: left;
+      }
+
+      .status-button:hover,
+      .status-button.is-active {
+        background: var(--warm-soft);
+        color: var(--warm);
+      }
+
+      .content {
+        min-width: 0;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+        gap: 28px;
+        align-items: stretch;
+        margin-bottom: 20px;
+      }
+
+      .hero-copy {
+        padding: 18px 0 8px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--warm);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 820px;
+        font-size: clamp(34px, 4vw, 58px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .summary {
+        max-width: 720px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.7;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        align-content: end;
+      }
+
+      .stat {
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 10px 26px rgba(23, 32, 51, 0.05);
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 24px 0 20px;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 10px 28px rgba(23, 32, 51, 0.05);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        min-height: 34px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: #344054;
+      }
+
+      .chip.is-active {
+        border-color: #172033;
+        background: #172033;
+        color: #fff;
+      }
+
+      .sort-select {
+        min-height: 36px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fff;
+        color: #344054;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .template-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 12px 28px rgba(23, 32, 51, 0.06);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .template-card:hover {
+        transform: translateY(-3px);
+        border-color: #cdd8e3;
+        box-shadow: 0 22px 48px rgba(23, 32, 51, 0.11);
+      }
+
+      .cover {
+        position: relative;
+        display: block;
+        aspect-ratio: 1200 / 630;
+        overflow: hidden;
+        background: var(--surface-2);
+      }
+
+      .cover img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        transition: transform 180ms ease;
+      }
+
+      .template-card:hover .cover img {
+        transform: scale(1.03);
+      }
+
+      .badge {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        padding: 6px 9px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--success);
+        font-size: 12px;
+        font-weight: 800;
+        box-shadow: 0 8px 20px rgba(23, 32, 51, 0.12);
+      }
+
+      .badge.is-pending {
+        color: var(--muted);
+      }
+
+      .download-state {
+        margin: 0 0 12px;
+        padding: 9px 10px;
+        border-radius: 8px;
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .download-state.is-downloaded {
+        background: var(--success-soft);
+        color: var(--success);
+      }
+
+      .card-body {
+        padding: 17px;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 10px;
+      }
+
+      .tag {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .template-title {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.3;
+      }
+
+      .desc {
+        margin: 8px 0 12px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .fit {
+        margin: 0 0 12px;
+        color: #344054;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .modules {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 16px;
+      }
+
+      .modules span {
+        padding: 5px 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        color: #344054;
+        font-size: 12px;
+        background: #fff;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .button {
+        min-height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .button.primary {
+        border: 1px solid var(--accent);
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .button.primary:hover {
+        background: var(--accent-dark);
+      }
+
+      .button.secondary {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .button.secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .empty {
+        display: none;
+        padding: 34px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .empty.is-visible {
+        display: block;
+      }
+
+      @media (max-width: 1120px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 820px) {
+        .top-nav {
+          grid-template-columns: 1fr;
+          gap: 12px;
+          padding: 14px 18px;
+          position: static;
+        }
+
+        .brand {
+          min-width: 0;
+        }
+
+        .nav-action {
+          display: none;
+        }
+
+        .layout {
+          grid-template-columns: 1fr;
+          padding: 20px 16px 34px;
+        }
+
+        .sidebar {
+          position: static;
+        }
+
+        .side-section {
+          padding: 16px;
+        }
+
+        .category-list {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 6px;
+        }
+
+        .category-button {
+          border: 1px solid var(--line);
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 430px) {
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .category-list {
+          grid-template-columns: 1fr;
+        }
+
+        .actions {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-nav">
+        <div class="brand" aria-label="WordPress 外贸模板库">
+          <span class="brand-mark">W</span>
+          <span>WordPress 外贸模板库</span>
+        </div>
+        <label class="search">
+          <span hidden>搜索模板</span>
+          <input id="searchInput" type="search" placeholder="搜索模板、行业、插件，例如 machinery / Elementor" />
+        </label>
+        <a class="nav-action" href="#templates">查看模板</a>
+      </header>
+
+      <div class="layout">
+        <aside class="sidebar" aria-label="模板筛选">
+          <section class="side-section">
+            <p class="side-title">行业类目</p>
+            <div class="category-list" id="categoryList"></div>
+          </section>
+          <section class="side-section">
+            <p class="side-title">建站组件</p>
+            <label class="checkbox-row">
+              <input type="checkbox" value="Elementor" data-filter-tag />
+              Elementor
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" value="WooCommerce" data-filter-tag />
+              WooCommerce
+            </label>
+            <label class="checkbox-row">
+              <input type="checkbox" value="WPML" data-filter-tag />
+              WPML 多语言
+            </label>
+          </section>
+          <section class="side-section">
+            <p class="side-title">下载状态</p>
+            <button class="status-button is-active" type="button" data-status="all">
+              <span>全部状态</span>
+            </button>
+            <button class="status-button" type="button" data-status="downloaded">
+              <span>已下载</span>
+            </button>
+            <button class="status-button" type="button" data-status="pending">
+              <span>未下载</span>
+            </button>
+          </section>
+        </aside>
+
+        <main class="content">
+          <section class="hero">
+            <div class="hero-copy">
+              <p class="eyebrow">WordPress templates for export websites</p>
+              <h1>按行业浏览外贸建站模板</h1>
+              <p class="summary">
+                先做成类似模板市场的展示站：客户可以按类目筛选、查看封面、打开官方 Demo，并把感兴趣的模板发给你确认授权和建站方案。
+              </p>
+            </div>
+            <div class="stats" aria-label="模板统计">
+              <div class="stat">
+                <strong id="totalCount">0</strong>
+                <span>已录入模板</span>
+              </div>
+              <div class="stat">
+                <strong id="categoryCount">0</strong>
+                <span>行业类目</span>
+              </div>
+              <div class="stat">
+                <strong id="coverCount">0</strong>
+                <span>真实封面</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="toolbar" aria-label="模板工具栏">
+            <div class="chips" id="chips"></div>
+            <select class="sort-select" id="sortSelect" aria-label="排序">
+              <option value="recommended">推荐排序</option>
+              <option value="name">名称 A-Z</option>
+            </select>
+          </section>
+
+          <section id="templates" class="grid" aria-label="模板列表"></section>
+          <p class="empty" id="emptyState">没有找到匹配模板，换一个关键词或类目试试。</p>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      let categories = [{ id: "all", name: "全部模板" }];
+      let templates = [];
+
+      const state = {
+        category: location.hash.replace("#", "") || "all",
+        query: "",
+        tags: new Set(),
+        sort: "recommended",
+        status: "all",
+      };
+
+      const categoryList = document.querySelector("#categoryList");
+      const chips = document.querySelector("#chips");
+      const grid = document.querySelector("#templates");
+      const emptyState = document.querySelector("#emptyState");
+      const searchInput = document.querySelector("#searchInput");
+      const sortSelect = document.querySelector("#sortSelect");
+      const totalCount = document.querySelector("#totalCount");
+      const categoryCount = document.querySelector("#categoryCount");
+      const coverCount = document.querySelector("#coverCount");
+
+      async function loadTemplateData() {
+        try {
+          const response = await fetch("data/templates.json", { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          templates = data.templates || [];
+          categories = [
+            { id: "all", name: "全部模板" },
+            ...(data.categories || []).map((category) => ({
+              id: category.id,
+              name: category.name,
+            })),
+          ];
+        } catch (error) {
+          emptyState.textContent = `模板数据加载失败：${error.message}`;
+          emptyState.classList.add("is-visible");
+        }
+      }
+
+      function countByCategory(id) {
+        if (id === "all") return templates.length;
+        return templates.filter((item) => item.category === id).length;
+      }
+
+      function renderCategories() {
+        categoryList.replaceChildren(
+          ...categories.map((category) => {
+            const button = document.createElement("button");
+            button.className = `category-button${state.category === category.id ? " is-active" : ""}`;
+            button.type = "button";
+            button.dataset.category = category.id;
+            button.innerHTML = `<span>${category.name}</span><span class="count">${countByCategory(category.id)}</span>`;
+            return button;
+          }),
+        );
+
+        chips.replaceChildren(
+          ...categories.slice(0, 5).map((category) => {
+            const button = document.createElement("button");
+            button.className = `chip${state.category === category.id ? " is-active" : ""}`;
+            button.type = "button";
+            button.dataset.category = category.id;
+            button.textContent = category.name;
+            return button;
+          }),
+        );
+      }
+
+      function matchesTemplate(template) {
+        const categoryMatch = state.category === "all" || template.category === state.category;
+        const haystack = [
+          template.title,
+          template.description,
+          template.suitableFor,
+          ...template.tags,
+          ...template.modules,
+          categories.find((category) => category.id === template.category)?.name || "",
+        ]
+          .join(" ")
+          .toLowerCase();
+        const queryMatch = haystack.includes(state.query.toLowerCase().trim());
+        const tagMatch =
+          state.tags.size === 0 || [...state.tags].every((tag) => template.tags.join(" ").includes(tag));
+        const statusMatch =
+          state.status === "all" ||
+          (state.status === "downloaded" && template.downloaded) ||
+          (state.status === "pending" && !template.downloaded);
+        return categoryMatch && queryMatch && tagMatch && statusMatch;
+      }
+
+      function getLocalDownloadUrl(template) {
+        if (!template.localFile) return "";
+        const marker = `${template.itemId}\\`;
+        const fileName = template.localFile.includes(marker)
+          ? template.localFile.split(marker).pop()
+          : template.originalDownloadName;
+        if (!fileName) return "";
+        return `downloads/${encodeURIComponent(template.itemId)}/${encodeURIComponent(fileName)}`;
+      }
+
+      function renderTemplates() {
+        const visible = templates
+          .filter(matchesTemplate)
+          .sort((a, b) => (state.sort === "name" ? a.title.localeCompare(b.title) : 0));
+
+        grid.replaceChildren(
+          ...visible.map((template) => {
+            const article = document.createElement("article");
+            article.className = "template-card";
+            const downloaded = Boolean(template.downloaded);
+            const downloadUrl = getLocalDownloadUrl(template);
+            article.innerHTML = `
+              <a class="cover" href="${template.demoUrl}" aria-label="打开 ${template.title} 官方 Demo">
+                <img src="${template.image}" alt="${template.title} 模板封面图" loading="lazy">
+                <span class="badge${downloaded ? "" : " is-pending"}">${downloaded ? "已下载" : "未下载"}</span>
+              </a>
+              <div class="card-body">
+                <div class="meta">
+                  ${template.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+                </div>
+                <h2 class="template-title">${template.title}</h2>
+                <p class="desc">${template.description}</p>
+                <p class="fit"><strong>适合：</strong>${template.suitableFor}</p>
+                <p class="download-state${downloaded ? " is-downloaded" : ""}">
+                  ${downloaded ? `已归档：${template.originalDownloadName || "本地文件"}` : "未归档：下载后运行归档脚本"}
+                </p>
+                <div class="modules">
+                  ${template.modules.map((item) => `<span>${item}</span>`).join("")}
+                </div>
+                <div class="actions">
+                  <a class="button primary" href="${template.demoUrl}">查看 Demo</a>
+                  ${downloadUrl ? `<a class="button secondary" href="${downloadUrl}" download>下载文件</a>` : ""}
+                </div>
+              </div>
+            `;
+            return article;
+          }),
+        );
+
+        emptyState.classList.toggle("is-visible", visible.length === 0);
+        totalCount.textContent = templates.length;
+        categoryCount.textContent = Math.max(categories.length - 1, 0);
+        coverCount.textContent = templates.filter((template) => template.image).length;
+      }
+
+      function setCategory(id) {
+        state.category = id;
+        history.replaceState(null, "", id === "all" ? location.pathname : `#${id}`);
+        renderCategories();
+        renderTemplates();
+      }
+
+      document.addEventListener("click", (event) => {
+        const categoryButton = event.target.closest("[data-category]");
+        if (categoryButton) setCategory(categoryButton.dataset.category);
+        const statusButton = event.target.closest("[data-status]");
+        if (statusButton) {
+          state.status = statusButton.dataset.status;
+          document.querySelectorAll("[data-status]").forEach((button) => {
+            button.classList.toggle("is-active", button.dataset.status === state.status);
+          });
+          renderTemplates();
+        }
+      });
+
+      searchInput.addEventListener("input", (event) => {
+        state.query = event.target.value;
+        renderTemplates();
+      });
+
+      sortSelect.addEventListener("change", (event) => {
+        state.sort = event.target.value;
+        renderTemplates();
+      });
+
+      document.querySelectorAll("[data-filter-tag]").forEach((input) => {
+        input.addEventListener("change", () => {
+          if (input.checked) {
+            state.tags.add(input.value);
+          } else {
+            state.tags.delete(input.value);
+          }
+          renderTemplates();
+        });
+      });
+
+      async function init() {
+        await loadTemplateData();
+        if (!categories.some((category) => category.id === state.category)) {
+          state.category = "all";
+        }
+        renderCategories();
+        renderTemplates();
+      }
+
+      init();
+    </script>
+  </body>
+</html>

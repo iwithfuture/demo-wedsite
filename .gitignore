@@ -1,0 +1,18 @@
+# Chrome 浏览器 Profile（包含登录态、缓存，不应提交）
+.envato-chrome-profile/
+
+# 已下载的模板 zip 文件（体积超大，2GB+）
+downloads/
+
+# 下载循环运行日志
+data/download-loop.log
+data/download-loop-state.json
+data/download-run-latest.json
+data/download-failed-queue.json
+
+# Claude Code 本地配置
+.claude/
+
+# 系统文件
+Thumbs.db
+Desktop.ini
