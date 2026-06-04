@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WordPress 模板使用说明</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        color-scheme: light;
+        --dark: #061421;
+        --dark-2: #0b1d2f;
+        --panel: #111c2a;
+        --brand: #2872fa;
+        --brand-2: #4fc3f7;
+        --ink: #172842;
+        --text: #3c526a;
+        --muted: #6b7d91;
+        --soft: #f4f8fc;
+        --line: #dce8f4;
+        --white: #fff;
+        --radius: 8px;
+        --container: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: #fff;
+        color: var(--text);
+        font:
+          16px / 1.75 Roboto, "Noto Sans SC", "Microsoft YaHei", Arial,
+          sans-serif;
+        text-rendering: optimizeLegibility;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .cursor-light {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        width: 360px;
+        height: 360px;
+        pointer-events: none;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(79, 195, 247, 0.13), transparent 64%);
+        opacity: 0;
+        transform: translate(-50%, -50%);
+        transition: opacity 200ms ease;
+      }
+
+      .site-shell {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .hero {
+        min-height: 100svh;
+        color: #fff;
+        background:
+          radial-gradient(circle at 78% 22%, rgba(40, 114, 250, 0.2), transparent 28%),
+          radial-gradient(circle at 38% 78%, rgba(79, 195, 247, 0.1), transparent 34%),
+          linear-gradient(135deg, #061421 0%, #081827 54%, #071523 100%);
+      }
+
+      .nav {
+        width: min(100%, var(--container));
+        min-height: 78px;
+        margin: 0 auto;
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: #fff;
+        font-weight: 900;
+        box-shadow: 0 16px 36px rgba(40, 114, 250, 0.26);
+      }
+
+      .brand-name {
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+      }
+
+      .nav-links a:hover {
+        color: #fff;
+      }
+
+      .nav-cta {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        padding: 0 20px;
+        background: linear-gradient(135deg, #2e7bf8, #4fc3f7);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+        box-shadow: 0 18px 42px rgba(40, 114, 250, 0.28);
+      }
+
+      .hero-inner {
+        width: min(100%, var(--container));
+        margin: 0 auto;
+        padding: 128px 32px 72px;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 0 24px;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 32px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      h1 {
+        max-width: 900px;
+        margin: 0;
+        color: #fff;
+        font-size: 70px;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 820px;
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 19px;
+        line-height: 1.9;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 38px;
+      }
+
+      .button {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        padding: 0 22px;
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        background: linear-gradient(135deg, #2e7bf8, #4fc3f7);
+        color: #fff;
+        box-shadow: 0 18px 42px rgba(40, 114, 250, 0.24);
+      }
+
+      .button.ghost {
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+      }
+
+      .hero-metrics {
+        width: min(100%, 760px);
+        margin-top: 54px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .metric {
+        min-height: 112px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.055);
+        padding: 20px;
+        backdrop-filter: blur(16px);
+      }
+
+      .metric strong {
+        display: block;
+        color: #fff;
+        font-size: 32px;
+        line-height: 1.1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 8px;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .scroll-note {
+        position: absolute;
+        right: 42px;
+        bottom: 34px;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        writing-mode: vertical-rl;
+      }
+
+      .section {
+        width: min(100%, var(--container));
+        margin: 0 auto;
+        padding: 104px 32px;
+      }
+
+      .section.compact {
+        padding-top: 78px;
+      }
+
+      .section-head {
+        max-width: 760px;
+        margin-bottom: 42px;
+      }
+
+      .kicker {
+        margin: 0 0 14px;
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        margin: 0;
+        color: var(--ink);
+        font-size: 42px;
+        line-height: 1.18;
+        letter-spacing: 0;
+      }
+
+      .section-copy {
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 0.92fr 1.08fr;
+        gap: 56px;
+        align-items: start;
+      }
+
+      .plain-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .plain-item {
+        display: grid;
+        grid-template-columns: 56px minmax(0, 1fr);
+        gap: 18px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .plain-item:last-child {
+        border-bottom: 0;
+      }
+
+      .plain-item .num {
+        color: var(--brand);
+        font-size: 22px;
+        font-weight: 900;
+        line-height: 1.2;
+      }
+
+      .plain-item h3 {
+        margin: 0 0 8px;
+        color: var(--ink);
+        font-size: 22px;
+        line-height: 1.3;
+      }
+
+      .plain-item p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .band {
+        background: var(--soft);
+        border-top: 1px solid #e7f0f8;
+        border-bottom: 1px solid #e7f0f8;
+      }
+
+      .compare {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .compare-card {
+        position: relative;
+        min-height: 360px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 30px;
+        overflow: hidden;
+        transition:
+          transform 220ms ease,
+          box-shadow 220ms ease;
+      }
+
+      .compare-card::after {
+        content: "";
+        position: absolute;
+        right: -56px;
+        top: -56px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(40, 114, 250, 0.08);
+      }
+
+      .compare-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 22px 52px rgba(30, 63, 102, 0.12);
+      }
+
+      .compare-card.dark {
+        border-color: #162c43;
+        background: linear-gradient(145deg, #071a2f, #0d263f);
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      .compare-card.dark h3,
+      .compare-card.dark .label {
+        color: #fff;
+      }
+
+      .label {
+        display: inline-flex;
+        margin-bottom: 42px;
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .compare-card h3 {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 16px;
+        color: var(--ink);
+        font-size: 30px;
+        line-height: 1.2;
+      }
+
+      .compare-card p {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+      }
+
+      .checks {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 10px;
+        margin-top: 24px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .checks li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .checks li::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        flex: 0 0 auto;
+        margin-top: 11px;
+        border-radius: 50%;
+        background: var(--brand-2);
+      }
+
+      .process {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .step {
+        min-height: 224px;
+        padding: 28px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .step span {
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .step h3 {
+        margin: 22px 0 10px;
+        color: var(--ink);
+        font-size: 21px;
+        line-height: 1.32;
+      }
+
+      .step p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .statement {
+        width: min(100%, var(--container));
+        margin: 0 auto 96px;
+        padding: 0 32px;
+      }
+
+      .statement-inner {
+        border-radius: var(--radius);
+        background:
+          radial-gradient(circle at 80% 20%, rgba(79, 195, 247, 0.18), transparent 28%),
+          linear-gradient(135deg, #071a2f, #0a2239);
+        color: rgba(255, 255, 255, 0.74);
+        padding: 44px;
+      }
+
+      .statement h2 {
+        max-width: 820px;
+        color: #fff;
+      }
+
+      .statement p {
+        max-width: 880px;
+      }
+
+      .footer {
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .footer-inner {
+        width: min(100%, var(--container));
+        margin: 0 auto;
+        padding: 24px 32px 42px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .footer a {
+        color: var(--brand);
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 640ms ease,
+          transform 640ms ease;
+      }
+
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+
+      @media (max-width: 980px) {
+        h1 {
+          font-size: 52px;
+        }
+
+        h2 {
+          font-size: 34px;
+        }
+
+        .split,
+        .compare,
+        .process {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .nav,
+        .hero-inner,
+        .section,
+        .statement,
+        .footer-inner {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .hero {
+          min-height: auto;
+        }
+
+        .hero-inner {
+          padding-top: 76px;
+          padding-bottom: 76px;
+        }
+
+        h1 {
+          font-size: 38px;
+        }
+
+        h2 {
+          font-size: 28px;
+        }
+
+        .lead,
+        .section-copy {
+          font-size: 16px;
+        }
+
+        .hero-metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-cta {
+          display: none;
+        }
+
+        .section {
+          padding-top: 72px;
+          padding-bottom: 72px;
+        }
+
+        .plain-item {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .statement-inner {
+          padding: 28px;
+        }
+
+        .footer-inner {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor-light" aria-hidden="true"></div>
+    <div class="site-shell">
+      <header class="hero">
+        <nav class="nav">
+          <a class="brand" href="index.html">
+            <span class="brand-mark">WP</span>
+            <span class="brand-name">外贸建站模板库</span>
+          </a>
+          <div class="nav-links">
+            <a href="#systems">建站方式</a>
+            <a href="#difference">模板区别</a>
+            <a href="#workflow">导入流程</a>
+            <a href="index.html">模板库</a>
+          </div>
+          <a class="nav-cta" href="index.html">选择模板 →</a>
+        </nav>
+
+        <div class="hero-inner">
+          <p class="eyebrow reveal">WordPress Growth System</p>
+          <h1 class="reveal">把模板变成真正能获客的外贸网站。</h1>
+          <p class="lead reveal">
+            AI 可以帮助你规划内容和页面结构，WordPress 模板可以快速搭出接近 Demo 的视觉效果。真正上线前，还需要替换企业资料、产品内容、询盘路径和移动端细节。
+          </p>
+          <div class="hero-actions reveal">
+            <a class="button primary" href="index.html">浏览模板库 →</a>
+            <a class="button ghost" href="#difference">了解怎么使用</a>
+          </div>
+          <div class="hero-metrics reveal">
+            <div class="metric">
+              <strong>2,000+</strong>
+              <span>已整理 Template Kits</span>
+            </div>
+            <div class="metric">
+              <strong>ZIP</strong>
+              <span>下载后用于 Elementor 导入</span>
+            </div>
+            <div class="metric">
+              <strong>Demo</strong>
+              <span>先预览效果再决定</span>
+            </div>
+          </div>
+        </div>
+        <span class="scroll-note">SCROLL</span>
+      </header>
+
+      <main>
+        <section class="section" id="systems">
+          <div class="split">
+            <div class="section-head reveal">
+              <p class="kicker">Website Building Options</p>
+              <h2>AI 建站、WP 模板建站、定制建站，解决的是三个不同问题。</h2>
+              <p class="section-copy">
+                很多客户会把它们混在一起。更准确的理解是：AI 负责提效，模板负责快速落地，定制负责长期增长和复杂功能。
+              </p>
+            </div>
+            <div class="plain-list">
+              <article class="plain-item reveal">
+                <span class="num">01</span>
+                <div>
+                  <h3>AI 智能建站</h3>
+                  <p>适合快速生成栏目、文案、SEO 标题、产品描述和多语言内容，但行业判断、转化逻辑和最终交付仍需要人工把关。</p>
+                </div>
+              </article>
+              <article class="plain-item reveal">
+                <span class="num">02</span>
+                <div>
+                  <h3>WordPress 模板建站</h3>
+                  <p>适合用 Elementor Template Kit 快速搭出页面，再替换 logo、图片、产品、服务介绍、表单和联系方式。</p>
+                </div>
+              </article>
+              <article class="plain-item reveal">
+                <span class="num">03</span>
+                <div>
+                  <h3>WordPress 定制建站</h3>
+                  <p>适合需要 SEO 结构、产品目录、多语言、询盘追踪、速度优化和后续运营的企业，把网站做成长期获客系统。</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <div class="band" id="difference">
+          <section class="section compact">
+            <div class="section-head reveal">
+              <p class="kicker">Template Kit vs Theme</p>
+              <h2>下载到的 Template Kit，不是 WordPress 主题。</h2>
+              <p class="section-copy">
+                这是最容易出错的一点。Template Kit 是 Elementor 页面模板包，不是后台“外观 > 主题”里直接安装的主题文件。
+              </p>
+            </div>
+
+            <div class="compare">
+              <article class="compare-card dark reveal">
+                <span class="label">Elementor Template Kit</span>
+                <h3>用于快速导入页面设计</h3>
+                <p>它通常包含首页、关于我们、服务页、联系页、区块和全局样式，需要通过 Elementor 或 Envato Elements 相关导入工具使用。</p>
+                <ul class="checks">
+                  <li>适合快速复刻 Demo 的页面视觉</li>
+                  <li>依赖 Elementor，部分模板需要 Elementor Pro</li>
+                  <li>不要在“外观 > 主题”中直接上传安装</li>
+                </ul>
+              </article>
+
+              <article class="compare-card reveal">
+                <span class="label">WordPress Theme</span>
+                <h3>用于控制网站基础外观框架</h3>
+                <p>主题控制 WordPress 的基础结构、模板文件和外观框架，通常在后台“外观 > 主题”中上传安装。</p>
+                <ul class="checks">
+                  <li>负责网站整体主题框架</li>
+                  <li>主题不一定包含完整页面内容</li>
+                  <li>Template Kit 常常需要搭配一个轻量主题使用</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <section class="section" id="workflow">
+          <div class="section-head reveal">
+            <p class="kicker">Import Workflow</p>
+            <h2>下载模板后，按这个流程导入 WordPress。</h2>
+            <p class="section-copy">
+              导入只是开始。真正给客户交付的网站，还要做内容替换、表单配置、导航设置、速度检查和移动端适配。
+            </p>
+          </div>
+
+          <div class="process">
+            <article class="step reveal">
+              <span>STEP 01</span>
+              <h3>准备 WordPress 网站</h3>
+              <p>确认后台可以登录，服务器空间、PHP 版本和上传限制正常。</p>
+            </article>
+            <article class="step reveal">
+              <span>STEP 02</span>
+              <h3>安装必要插件</h3>
+              <p>安装 Elementor。若模板标记 Elementor Pro 或 WooCommerce，也需要安装对应插件。</p>
+            </article>
+            <article class="step reveal">
+              <span>STEP 03</span>
+              <h3>上传 Template Kit ZIP</h3>
+              <p>不要解压 zip，通过 Envato Elements 或 Template Kit 导入工具上传。</p>
+            </article>
+            <article class="step reveal">
+              <span>STEP 04</span>
+              <h3>导入页面和全局样式</h3>
+              <p>先导入 Global Kit Styles，再导入首页、服务页、关于页和联系页。</p>
+            </article>
+            <article class="step reveal">
+              <span>STEP 05</span>
+              <h3>替换企业内容</h3>
+              <p>替换 logo、文案、图片、产品、联系方式、表单收件邮箱和按钮链接。</p>
+            </article>
+            <article class="step reveal">
+              <span>STEP 06</span>
+              <h3>发布前检查</h3>
+              <p>检查手机端、菜单、表单、速度、SEO 标题描述和 SSL，再正式上线。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="statement">
+          <div class="statement-inner reveal">
+            <p class="kicker">Important Note</p>
+            <h2>模板能提升效率，但不能替代真正的建站交付。</h2>
+            <p class="section-copy">
+              Template Kit 用来快速生成页面结构和视觉风格。要变成真正可用的外贸网站，还需要结合产品资料、关键词、询盘路径、移动端体验和数据追踪持续调整。
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <span>外贸建站模板库 · WordPress Template Kits</span>
+          <a href="index.html">返回模板库</a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const cursorLight = document.querySelector(".cursor-light");
+      const canHover = window.matchMedia("(hover: hover)").matches;
+
+      if (cursorLight && canHover) {
+        window.addEventListener("pointermove", (event) => {
+          cursorLight.style.left = `${event.clientX}px`;
+          cursorLight.style.top = `${event.clientY}px`;
+          cursorLight.style.opacity = "1";
+        });
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+    </script>
+  </body>
+</html>

@@ -9,6 +9,16 @@ data/download-loop.log
 data/download-loop-state.json
 data/download-run-latest.json
 data/download-failed-queue.json
+data/*.log
+data/*.err.log
+data/*.out.log
+
+# 数据备份
+data/templates-backup-*.json
+data/templates-before-*.json
+
+# 本地检查截图
+*.png
 
 # Claude Code 本地配置
 .claude/
@@ -16,3 +26,5 @@ data/download-failed-queue.json
 # 系统文件
 Thumbs.db
 Desktop.ini
+
+.vercel

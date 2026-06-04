@@ -1,0 +1,28 @@
+# Chrome 浏览器 Profile
+.envato-chrome-profile/
+
+# 下载文件
+downloads/
+
+# 下载日志和状态
+data/download-loop.log
+data/download-loop-state.json
+data/download-run-latest.json
+data/download-failed-queue.json
+
+# Claude Code 配置
+.claude/
+
+# 备份文件
+data/templates-backup-*.json
+data/templates-before-*.json
+data/*.log
+data/*.err.log
+data/*.out.log
+
+# 本地检查截图
+*.png
+
+# 系统文件
+Thumbs.db
+Desktop.ini
