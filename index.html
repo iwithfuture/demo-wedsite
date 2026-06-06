@@ -94,22 +94,22 @@
     <style>
       :root {
         color-scheme: light;
-        --page: #f4f8fc;
+        --page: #f7fbff;
         --surface: #ffffff;
         --surface-soft: #f5f8fc;
-        --dark: #061421;
-        --dark-2: #0b1d2f;
-        --panel: #111c2a;
-        --ink: #172842;
-        --text: #3c526a;
-        --muted: #6b7d91;
+        --dark: #21344d;
+        --dark-2: #3a4f66;
+        --panel: #eaf5ff;
+        --ink: #21344d;
+        --text: #3a4f66;
+        --muted: #60758b;
         --faint: #8ca0b4;
         --line: #dce8f4;
         --line-soft: #e7f0f8;
         --brand: #2872fa;
         --brand-dark: #1558d6;
         --brand-soft: #eaf3ff;
-        --brand-2: #4fc3f7;
+        --brand-2: #54a9ff;
         --sky: #dceffc;
         --green: #168a45;
         --orange: #a45f12;
@@ -181,9 +181,9 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        background: rgba(6, 20, 33, 0.94);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        box-shadow: 0 18px 42px rgba(6, 20, 33, 0.18);
+        background: rgba(255, 255, 255, 0.96);
+        border-bottom: 1px solid rgba(215, 229, 242, 0.9);
+        box-shadow: 0 12px 32px rgba(40, 114, 250, 0.08);
         backdrop-filter: blur(18px);
       }
 
@@ -212,7 +212,7 @@
         display: grid;
         place-items: center;
         border-radius: var(--radius);
-        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        background: var(--brand);
         color: #fff;
         font-weight: 900;
         box-shadow: 0 16px 36px rgba(40, 114, 250, 0.26);
@@ -228,7 +228,7 @@
 
       .brand-name {
         display: block;
-        color: #fff;
+        color: var(--brand);
         font-size: 18px;
         font-weight: 900;
         line-height: 1.2;
@@ -238,7 +238,7 @@
       .brand-sub {
         display: block;
         margin-top: 3px;
-        color: rgba(255, 255, 255, 0.58);
+        color: var(--muted);
         font-size: 12px;
         line-height: 1.35;
         white-space: nowrap;
@@ -251,17 +251,17 @@
       .search input {
         width: 100%;
         height: 44px;
-        border: 1px solid rgba(255, 255, 255, 0.16);
+        border: 1px solid #c9d9ea;
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.08);
+        background: #fff;
         padding: 0 var(--space-4) 0 40px;
-        color: #fff;
+        color: var(--ink);
         font-size: 15px;
         outline: none;
       }
 
       .search input::placeholder {
-        color: rgba(255, 255, 255, 0.52);
+        color: #8ca0b4;
       }
 
       .search input:focus {
@@ -275,7 +275,7 @@
         top: 50%;
         width: 17px;
         height: 17px;
-        color: rgba(255, 255, 255, 0.62);
+        color: var(--muted);
         transform: translateY(-50%);
       }
 
@@ -304,8 +304,9 @@
       }
 
       .nav-link.is-ghost {
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--text);
         box-shadow: none;
       }
 
@@ -316,11 +317,11 @@
       .owner-badge {
         min-height: 36px;
         align-items: center;
-        border: 1px solid rgba(79, 195, 247, 0.42);
+        border: 1px solid rgba(40, 114, 250, 0.28);
         border-radius: var(--radius);
-        background: rgba(79, 195, 247, 0.1);
+        background: var(--brand-soft);
         padding: 0 var(--space-3);
-        color: #fff;
+        color: var(--brand);
         font-size: 13px;
         font-weight: 900;
         white-space: nowrap;
@@ -360,12 +361,11 @@
         gap: 48px;
         align-items: end;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid #d7eaf8;
         border-radius: var(--radius);
         background:
-          radial-gradient(circle at 86% 20%, rgba(40, 114, 250, 0.22), transparent 30%),
-          radial-gradient(circle at 30% 88%, rgba(79, 195, 247, 0.12), transparent 34%),
-          linear-gradient(135deg, #061421 0%, #0b1d2f 56%, #071523 100%);
+          linear-gradient(168deg, rgba(255, 255, 255, 0) 0 76%, #ffffff 76.3% 100%),
+          linear-gradient(135deg, #eef8ff 0%, #cfeaff 58%, #b8dcf6 100%);
         padding: 48px;
         margin-bottom: 28px;
         isolation: isolate;
@@ -380,7 +380,7 @@
         background: linear-gradient(
           105deg,
           transparent 0 38%,
-          rgba(255, 255, 255, 0.08) 48%,
+          rgba(255, 255, 255, 0.34) 48%,
           transparent 58% 100%
         );
         transform: translateX(-32%);
@@ -390,7 +390,7 @@
 
       .breadcrumb {
         margin: 0 0 var(--space-2);
-        color: rgba(255, 255, 255, 0.62);
+        color: var(--brand);
         font-size: 13px;
         font-weight: 900;
         letter-spacing: 0.08em;
@@ -401,7 +401,7 @@
       h1 {
         margin: 0;
         max-width: 720px;
-        color: #fff;
+        color: var(--ink);
         font-size: 48px;
         line-height: 1.12;
         font-weight: 900;
@@ -411,7 +411,7 @@
       .market-sub {
         max-width: 720px;
         margin: var(--space-4) 0 0;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--text);
         font-size: 17px;
         line-height: 1.85;
       }
@@ -442,8 +442,9 @@
       }
 
       .hero-link.secondary {
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(40, 114, 250, 0.24);
+        background: #fff;
+        color: var(--brand);
       }
 
       .stats-strip {
@@ -453,9 +454,9 @@
 
       .stat {
         min-width: 118px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.86);
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.07);
+        background: rgba(255, 255, 255, 0.82);
         padding: 18px;
         backdrop-filter: blur(16px);
         transition:
@@ -467,12 +468,12 @@
       .stat:hover {
         transform: translateY(-2px);
         border-color: rgba(79, 195, 247, 0.42);
-        box-shadow: 0 18px 42px rgba(6, 20, 33, 0.28);
+        box-shadow: 0 18px 42px rgba(40, 114, 250, 0.12);
       }
 
       .stat strong {
         display: block;
-        color: #fff;
+        color: var(--ink);
         font-size: 28px;
         line-height: 1;
         font-variant-numeric: tabular-nums;
@@ -481,7 +482,7 @@
       .stat span {
         display: block;
         margin-top: var(--space-2);
-        color: rgba(255, 255, 255, 0.58);
+        color: var(--muted);
         font-size: 12px;
       }
 
@@ -502,9 +503,9 @@
       .flow-card {
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.92);
+        background: #fff;
         padding: var(--space-5);
-        box-shadow: 0 14px 34px rgba(30, 63, 102, 0.06);
+        box-shadow: 0 12px 30px rgba(40, 114, 250, 0.08);
       }
 
       .flow-card span {
@@ -541,9 +542,9 @@
         margin-bottom: var(--space-6);
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.92);
+        background: #fff;
         padding: var(--space-6);
-        box-shadow: 0 14px 34px rgba(30, 63, 102, 0.06);
+        box-shadow: 0 12px 30px rgba(40, 114, 250, 0.08);
       }
 
       .seo-section h2 {
@@ -589,9 +590,9 @@
         top: 90px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.92);
+        background: #fff;
         overflow: hidden;
-        box-shadow: 0 18px 46px rgba(30, 63, 102, 0.08);
+        box-shadow: 0 12px 30px rgba(40, 114, 250, 0.08);
         animation: revealUp 520ms 80ms ease both;
       }
 
@@ -691,9 +692,9 @@
         margin-bottom: var(--space-5);
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.92);
+        background: #fff;
         padding: var(--space-3) var(--space-4);
-        box-shadow: 0 14px 34px rgba(30, 63, 102, 0.06);
+        box-shadow: 0 12px 30px rgba(40, 114, 250, 0.08);
         animation: revealUp 520ms 120ms ease both;
       }
 
@@ -821,7 +822,7 @@
       .item-card:hover {
         transform: translateY(-4px);
         border-color: rgba(40, 114, 250, 0.28);
-        box-shadow: var(--shadow);
+        box-shadow: 0 14px 34px rgba(40, 114, 250, 0.12);
       }
 
       .item-card.is-tilting {
@@ -1383,10 +1384,10 @@
     <header class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="#" aria-label="外贸建站模板库首页">
-          <span class="brand-mark">WP</span>
+          <span class="brand-mark">IF</span>
           <span>
-            <span class="brand-name">外贸建站模板库</span>
-            <span class="brand-sub">WordPress Template Kits</span>
+            <span class="brand-name">Iwithfuture Demo</span>
+            <span class="brand-sub">外贸网站模板库</span>
           </span>
         </a>
 

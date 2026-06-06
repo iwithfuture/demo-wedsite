@@ -126,11 +126,10 @@
 
       .hero {
         min-height: 100svh;
-        color: #fff;
+        color: var(--text);
         background:
-          radial-gradient(circle at 78% 22%, rgba(40, 114, 250, 0.2), transparent 28%),
-          radial-gradient(circle at 38% 78%, rgba(79, 195, 247, 0.1), transparent 34%),
-          linear-gradient(135deg, #061421 0%, #081827 54%, #071523 100%);
+          linear-gradient(168deg, rgba(255, 255, 255, 0) 0 78%, #ffffff 78.3% 100%),
+          linear-gradient(135deg, #eef8ff 0%, #cfeaff 58%, #b8dcf6 100%);
       }
 
       .nav {
@@ -157,13 +156,14 @@
         display: grid;
         place-items: center;
         border-radius: var(--radius);
-        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        background: var(--brand);
         color: #fff;
         font-weight: 900;
         box-shadow: 0 16px 36px rgba(40, 114, 250, 0.26);
       }
 
       .brand-name {
+        color: var(--brand);
         font-size: 18px;
         font-weight: 900;
         letter-spacing: 0;
@@ -173,7 +173,7 @@
         display: flex;
         align-items: center;
         gap: 30px;
-        color: rgba(255, 255, 255, 0.76);
+        color: var(--text);
         font-size: 14px;
         font-weight: 700;
       }
@@ -183,7 +183,7 @@
       }
 
       .nav-links a:hover {
-        color: #fff;
+        color: var(--brand);
       }
 
       .nav-cta {
@@ -212,7 +212,7 @@
         align-items: center;
         gap: 12px;
         margin: 0 0 24px;
-        color: rgba(255, 255, 255, 0.82);
+        color: var(--brand);
         font-size: 13px;
         font-weight: 900;
         letter-spacing: 0.08em;
@@ -223,13 +223,13 @@
         content: "";
         width: 32px;
         height: 1px;
-        background: rgba(255, 255, 255, 0.72);
+        background: var(--brand);
       }
 
       h1 {
         max-width: 900px;
         margin: 0;
-        color: #fff;
+        color: var(--ink);
         font-size: 70px;
         line-height: 1.08;
         letter-spacing: 0;
@@ -238,7 +238,7 @@
       .lead {
         max-width: 820px;
         margin: 28px 0 0;
-        color: rgba(255, 255, 255, 0.78);
+        color: var(--text);
         font-size: 19px;
         line-height: 1.9;
       }
@@ -269,9 +269,9 @@
       }
 
       .button.ghost {
-        border: 1px solid rgba(255, 255, 255, 0.24);
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
+        border: 1px solid rgba(40, 114, 250, 0.24);
+        background: #fff;
+        color: var(--brand);
       }
 
       .hero-metrics {
@@ -284,16 +284,16 @@
 
       .metric {
         min-height: 112px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.86);
         border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.055);
+        background: rgba(255, 255, 255, 0.82);
         padding: 20px;
         backdrop-filter: blur(16px);
       }
 
       .metric strong {
         display: block;
-        color: #fff;
+        color: var(--ink);
         font-size: 32px;
         line-height: 1.1;
       }
@@ -301,7 +301,7 @@
       .metric span {
         display: block;
         margin-top: 8px;
-        color: rgba(255, 255, 255, 0.62);
+        color: var(--muted);
         font-size: 13px;
         font-weight: 700;
       }
@@ -310,7 +310,7 @@
         position: absolute;
         right: 42px;
         bottom: 34px;
-        color: rgba(255, 255, 255, 0.55);
+        color: var(--muted);
         font-size: 11px;
         letter-spacing: 0.08em;
         writing-mode: vertical-rl;
@@ -686,8 +686,8 @@
       <header class="hero">
         <nav class="nav">
           <a class="brand" href="index.html">
-            <span class="brand-mark">WP</span>
-            <span class="brand-name">外贸建站模板库</span>
+            <span class="brand-mark">IF</span>
+            <span class="brand-name">Iwithfuture Demo</span>
           </a>
           <div class="nav-links">
             <a href="#systems">建站方式</a>
