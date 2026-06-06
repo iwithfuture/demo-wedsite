@@ -830,31 +830,6 @@
         font-size: 13px;
       }
 
-      .sort-wrap {
-        min-height: 36px;
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-2);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: #fff;
-        padding: 0 0 0 var(--space-3);
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .sort-select {
-        height: 36px;
-        border: 0;
-        border-left: 1px solid var(--line-soft);
-        border-radius: 0 var(--radius) var(--radius) 0;
-        background: transparent;
-        color: var(--ink);
-        padding: 0 34px 0 var(--space-3);
-        outline: none;
-        font-weight: 800;
-      }
-
       .grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1396,14 +1371,6 @@
           display: none;
         }
 
-        .sort-wrap {
-          justify-content: space-between;
-        }
-
-        .sort-select {
-          width: 100%;
-        }
-
         .grid,
         .category-list {
           grid-template-columns: 1fr;
@@ -1598,13 +1565,6 @@
             </div>
             <div class="result-tools">
               <span class="result-count" id="resultCount">--</span>
-              <label class="sort-wrap">
-                <span>排序</span>
-                <select class="sort-select" id="sortSelect" aria-label="排序">
-                  <option value="recommended">推荐优先</option>
-                  <option value="name">名称 A-Z</option>
-                </select>
-              </label>
             </div>
           </div>
 
@@ -1644,7 +1604,6 @@
         category: location.hash.replace("#", "") || "all",
         query: "",
         tags: new Set(),
-        sort: "recommended",
         visibleCount: 60,
       };
 
@@ -1652,7 +1611,6 @@
       const grid = document.querySelector("#templates");
       const emptyState = document.querySelector("#emptyState");
       const searchInput = document.querySelector("#searchInput");
-      const sortSelect = document.querySelector("#sortSelect");
       const totalCount = document.querySelector("#totalCount");
       const demoCount = document.querySelector("#demoCount");
       const resultKicker = document.querySelector("#resultKicker");
@@ -1767,13 +1725,6 @@
         return categoryMatch && queryMatch && tagMatch;
       }
 
-      function sortTemplates(items) {
-        return [...items].sort((a, b) => {
-          if (state.sort === "name") return a.title.localeCompare(b.title);
-          return 0;
-        });
-      }
-
       function templateHasTag(template, tag) {
         const tags = template.tags || [];
         if (tag === "Elementor") return tags.some((item) => item === "Elementor" || item === "Elementor Pro");
@@ -1781,7 +1732,7 @@
       }
 
       function renderTemplates() {
-        const visible = sortTemplates(templates.filter(matchesTemplate));
+        const visible = templates.filter(matchesTemplate);
         const rendered = visible.slice(0, state.visibleCount);
         const currentCategory = categoryName(state.category);
 
@@ -1881,12 +1832,6 @@
 
       searchInput.addEventListener("input", (event) => {
         state.query = event.target.value;
-        resetVisibleCount();
-        renderTemplates();
-      });
-
-      sortSelect.addEventListener("change", (event) => {
-        state.sort = event.target.value;
         resetVisibleCount();
         renderTemplates();
       });
