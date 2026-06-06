@@ -406,6 +406,45 @@
         color: var(--brand);
       }
 
+      .price-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-3);
+        margin-top: var(--space-5);
+        max-width: 760px;
+      }
+
+      .price-card {
+        border: 1px solid rgba(40, 114, 250, 0.18);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.82);
+        padding: var(--space-4);
+        box-shadow: 0 14px 34px rgba(40, 114, 250, 0.08);
+      }
+
+      .price-card strong {
+        display: block;
+        color: var(--ink);
+        font-size: 28px;
+        line-height: 1.12;
+        font-weight: 900;
+      }
+
+      .price-card span {
+        display: block;
+        margin-top: 5px;
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .price-card p {
+        margin: var(--space-2) 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
       .workspace {
         display: grid;
         grid-template-columns: 270px minmax(0, 1fr);
@@ -1697,6 +1736,10 @@
           width: 100%;
         }
 
+        .price-options {
+          grid-template-columns: 1fr;
+        }
+
         .tabs-bar {
           grid-template-columns: 1fr;
           align-items: stretch;
@@ -1810,8 +1853,20 @@
           <h1>外贸网站模板</h1>
           <p class="market-sub">按行业浏览不同风格的网站方案，先查看真实 Demo 效果，再选择适合品牌、产品和获客场景的页面设计。</p>
           <div class="market-actions">
-            <a class="hero-link primary" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo，咨询建站落地 →</a>
+            <a class="hero-link primary" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo，咨询落地方案 →</a>
             <a class="hero-link secondary" href="guide.html">了解如何选择网站方案</a>
+          </div>
+          <div class="price-options" aria-label="服务价格">
+            <article class="price-card">
+              <span>单独模板方案</span>
+              <strong>159 元 / 个</strong>
+              <p>适合已经会搭建 WordPress 的客户，选中 Demo 后获取对应模板方案和编号说明。</p>
+            </article>
+            <article class="price-card">
+              <span>完整模板建站</span>
+              <strong>3000 元 / 站</strong>
+              <p>适合想省时间的客户，由我按选中的 Demo 帮你落地到 WordPress，并替换企业资料。</p>
+            </article>
           </div>
         </div>
       </section>
@@ -2018,7 +2073,7 @@
       </div>
     </footer>
 
-    <a class="floating-cta" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo？咨询落地</a>
+    <a class="floating-cta" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">159 选模板 / 3000 建站</a>
 
     <section class="shortlist-bar" id="shortlistBar" aria-live="polite">
       <div>
