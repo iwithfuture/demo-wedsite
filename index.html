@@ -207,7 +207,7 @@
         margin: 0 auto;
         padding: 0 var(--space-7);
         display: grid;
-        grid-template-columns: 250px minmax(320px, 680px) auto;
+        grid-template-columns: minmax(220px, 1fr) auto;
         align-items: center;
         gap: var(--space-6);
       }
@@ -236,41 +236,6 @@
         font-size: 12px;
         line-height: 1.35;
         white-space: nowrap;
-      }
-
-      .search {
-        position: relative;
-      }
-
-      .search input {
-        width: 100%;
-        height: 44px;
-        border: 1px solid #c9d9ea;
-        border-radius: var(--radius);
-        background: #fff;
-        padding: 0 var(--space-4) 0 40px;
-        color: var(--ink);
-        font-size: 15px;
-        outline: none;
-      }
-
-      .search input::placeholder {
-        color: #8ca0b4;
-      }
-
-      .search input:focus {
-        border-color: rgba(79, 195, 247, 0.82);
-        box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.16);
-      }
-
-      .search-icon {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        width: 17px;
-        height: 17px;
-        color: var(--muted);
-        transform: translateY(-50%);
       }
 
       .top-actions {
@@ -1829,14 +1794,6 @@
           </span>
         </a>
 
-        <label class="search">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
-          <span hidden>搜索模板</span>
-          <input id="searchInput" type="search" placeholder="搜索模板、行业、插件，例如 machinery / WooCommerce" />
-        </label>
-
         <div class="top-actions">
           <span class="owner-badge owner-only">管理模式</span>
           <a class="nav-link is-ghost" href="https://iwithfuture.com/" target="_blank" rel="noreferrer">博客</a>
@@ -2022,9 +1979,13 @@
               <span class="result-kicker" id="resultKicker">全部模板</span>
               <span class="result-text" id="resultText">正在加载模板</span>
             </div>
-              <div class="quick-filters" aria-label="快速筛选">
-                <button class="quick-filter" type="button" data-quick-tag="Elementor Pro">Elementor Pro</button>
-                <button class="quick-filter" type="button" data-quick-tag="WooCommerce">WooCommerce</button>
+              <div class="quick-filters" aria-label="按建站需求快速筛选">
+                <button class="quick-filter" type="button" data-intent="product">产品展示</button>
+                <button class="quick-filter" type="button" data-intent="inquiry">询盘获客</button>
+                <button class="quick-filter" type="button" data-intent="ecommerce">跨境电商</button>
+                <button class="quick-filter" type="button" data-intent="brand">品牌官网</button>
+                <button class="quick-filter" type="button" data-intent="booking">预约服务</button>
+                <button class="quick-filter" type="button" data-intent="multilingual">多语言网站</button>
               </div>
             </div>
             <div class="result-tools">
@@ -2101,7 +2062,7 @@
 
       const state = {
         category: location.hash.replace("#", "") || "all",
-        query: "",
+        intent: "",
         tags: new Set(),
         visibleCount: 60,
       };
@@ -2109,7 +2070,6 @@
       const categoryList = document.querySelector("#categoryList");
       const grid = document.querySelector("#templates");
       const emptyState = document.querySelector("#emptyState");
-      const searchInput = document.querySelector("#searchInput");
       const resultKicker = document.querySelector("#resultKicker");
       const resultText = document.querySelector("#resultText");
       const resultCount = document.querySelector("#resultCount");
@@ -2168,7 +2128,9 @@
       function renderIndustryInsight(visibleCount = 0) {
         const category = categoryName(state.category);
         const insight = industryInsights[state.category] || industryInsights.other;
-        industryNote.innerHTML = `<strong>${escapeHtml(category)}</strong>：${escapeHtml(insight)} 当前筛选到 ${formatNumber.format(visibleCount)} 个可参考 Demo。`;
+        const intent = state.intent ? intentFilters[state.intent] : null;
+        const intentNote = intent ? ` 当前需求：${escapeHtml(intent.label)}。${escapeHtml(intent.note)}` : "";
+        industryNote.innerHTML = `<strong>${escapeHtml(category)}</strong>：${escapeHtml(insight)}${intentNote} 当前筛选到 ${formatNumber.format(visibleCount)} 个可参考 Demo。`;
       }
 
       function saveShortlist() {
@@ -2326,30 +2288,55 @@
 
       }
 
-      function matchesTemplate(template) {
-        const categoryMatch = state.category === "all" || template.category === state.category;
-        const searchable = [
-          template.itemId,
-          template.title,
-          template.author,
-          template.description,
-          template.suitableFor,
-          categoryName(template.category),
-          ...(template.tags || []),
-          ...(template.modules || []),
-        ]
-          .join(" ")
-          .toLowerCase();
-        const query = state.query.toLowerCase().trim();
-        const queryMatch = !query || searchable.includes(query);
-        const tagMatch = state.tags.size === 0 || [...state.tags].every((tag) => templateHasTag(template, tag));
-        return categoryMatch && queryMatch && tagMatch;
-      }
-
       function templateHasTag(template, tag) {
         const tags = template.tags || [];
         if (tag === "Elementor") return tags.some((item) => item === "Elementor" || item === "Elementor Pro");
         return tags.includes(tag);
+      }
+
+      const intentFilters = {
+        product: {
+          label: "产品展示",
+          note: "优先看产品分类、详情页、应用场景和案例展示是否清晰，适合多数 B2B 外贸展示站。",
+          match: (template) => hasModule(template, ["产品", "服务介绍", "案例", "首页"]),
+        },
+        inquiry: {
+          label: "询盘获客",
+          note: "优先看联系表单、报价咨询、服务流程和信任背书，适合以 WhatsApp / 邮件询盘为目标的网站。",
+          match: (template) => hasModule(template, ["联系表单", "服务介绍", "FAQ", "客户评价"]),
+        },
+        ecommerce: {
+          label: "跨境电商",
+          note: "优先筛选带 WooCommerce、商品列表、购物车或结账流程的 Demo，适合在线下单或商品目录站。",
+          match: (template) => template.category === "ecommerce" || templateHasTag(template, "WooCommerce") || hasModule(template, ["商品", "购物", "结账"]),
+        },
+        brand: {
+          label: "品牌官网",
+          note: "优先看首页视觉、关于我们、品牌故事和案例展示，适合希望提升品牌感的企业官网。",
+          match: (template) => hasModule(template, ["首页", "关于", "案例", "客户评价"]),
+        },
+        booking: {
+          label: "预约服务",
+          note: "优先看预约、联系表单、服务介绍和团队展示，适合本地服务、医疗、美业、顾问类网站。",
+          match: (template) => template.category === "services" || /booking|appointment|clinic|salon|service/i.test([template.title, template.description, template.suitableFor].join(" ")) || hasModule(template, ["联系表单", "服务介绍", "团队"]),
+        },
+        multilingual: {
+          label: "多语言网站",
+          note: "多语言主要取决于后期 WordPress 落地时是否配置 WPML，这里可先按行业和页面风格挑选 Demo。",
+          match: () => true,
+        },
+      };
+
+      function hasModule(template, keywords) {
+        const haystack = [template.title, template.description, template.suitableFor, ...(template.modules || [])].join(" ");
+        return keywords.some((keyword) => haystack.includes(keyword));
+      }
+
+      function matchesTemplate(template) {
+        const categoryMatch = state.category === "all" || template.category === state.category;
+        const tagMatch = state.tags.size === 0 || [...state.tags].every((tag) => templateHasTag(template, tag));
+        const intentMatch = !state.intent || intentFilters[state.intent]?.match(template);
+        return categoryMatch && tagMatch && intentMatch;
       }
 
       function renderTemplates() {
@@ -2408,15 +2395,23 @@
         loadMoreWrap.classList.toggle("is-visible", rendered.length < visible.length);
         loadMoreButton.textContent = `加载更多模板（${formatNumber.format(rendered.length)} / ${formatNumber.format(visible.length)}）`;
         resultKicker.textContent = currentCategory;
-        resultText.textContent = `显示 ${formatNumber.format(rendered.length)} / ${formatNumber.format(visible.length)} 个模板`;
+        const resultLabel = state.intent ? `${intentFilters[state.intent]?.label || "需求"} · ` : "";
+        resultText.textContent = `${resultLabel}显示 ${formatNumber.format(rendered.length)} / ${formatNumber.format(visible.length)} 个模板`;
         resultCount.textContent = `${formatNumber.format(visible.length)} 个结果`;
         renderIndustryInsight(visible.length);
         syncQuickFilters();
+        syncIntentFilters();
       }
 
       function syncQuickFilters() {
         document.querySelectorAll("[data-quick-tag]").forEach((button) => {
           button.classList.toggle("is-active", state.tags.has(button.dataset.quickTag));
+        });
+      }
+
+      function syncIntentFilters() {
+        document.querySelectorAll("[data-intent]").forEach((button) => {
+          button.classList.toggle("is-active", state.intent === button.dataset.intent);
         });
       }
 
@@ -2442,6 +2437,13 @@
         const categoryButton = event.target.closest("[data-category]");
         if (categoryButton) setCategory(categoryButton.dataset.category);
 
+        const intentButton = event.target.closest("[data-intent]");
+        if (intentButton) {
+          state.intent = state.intent === intentButton.dataset.intent ? "" : intentButton.dataset.intent;
+          resetVisibleCount();
+          renderTemplates();
+        }
+
         const quickTagButton = event.target.closest("[data-quick-tag]");
         if (quickTagButton) {
           const tag = quickTagButton.dataset.quickTag;
@@ -2463,12 +2465,6 @@
         if (shortlistButton) {
           toggleShortlist(shortlistButton.dataset.shortlist);
         }
-      });
-
-      searchInput.addEventListener("input", (event) => {
-        state.query = event.target.value;
-        resetVisibleCount();
-        renderTemplates();
       });
 
       document.querySelectorAll("[data-filter-tag]").forEach((input) => {
