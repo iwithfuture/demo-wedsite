@@ -880,6 +880,25 @@
         line-height: 1.35;
       }
 
+      .industry-note {
+        grid-column: 1 / -1;
+        margin-top: var(--space-3);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(135deg, rgba(234, 245, 255, 0.8), rgba(255, 255, 255, 0.94)),
+          #fff;
+        padding: var(--space-4);
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .industry-note strong {
+        color: var(--ink);
+        font-weight: 900;
+      }
+
       .quick-filters {
         min-width: 0;
         display: flex;
@@ -1454,6 +1473,9 @@
 
       .shortlist-button {
         min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         border: 1px solid var(--line);
         border-radius: var(--radius);
         background: #fff;
@@ -1461,6 +1483,7 @@
         color: var(--text);
         font-size: 13px;
         font-weight: 900;
+        text-decoration: none;
       }
 
       .shortlist-button.primary {
@@ -1777,7 +1800,7 @@
 
         .shortlist-actions {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr;
         }
 
         .shortlist-button {
@@ -1994,11 +2017,11 @@
 
         <section class="results">
           <div class="tabs-bar" aria-label="模板工具栏">
-            <div class="toolbar-main">
-              <div class="result-summary">
-                <span class="result-kicker" id="resultKicker">全部模板</span>
-                <span class="result-text" id="resultText">正在加载模板</span>
-              </div>
+          <div class="toolbar-main">
+            <div class="result-summary">
+              <span class="result-kicker" id="resultKicker">全部模板</span>
+              <span class="result-text" id="resultText">正在加载模板</span>
+            </div>
               <div class="quick-filters" aria-label="快速筛选">
                 <button class="quick-filter" type="button" data-quick-tag="Elementor Pro">Elementor Pro</button>
                 <button class="quick-filter" type="button" data-quick-tag="WooCommerce">WooCommerce</button>
@@ -2008,6 +2031,7 @@
               <span class="result-count" id="resultCount">--</span>
             </div>
           </div>
+          <div class="industry-note" id="industryNote"></div>
 
           <div id="templates" class="grid" aria-label="模板列表"></div>
           <p class="empty" id="emptyState">没有找到匹配模板，换一个关键词或类目试试。</p>
@@ -2043,6 +2067,7 @@
       <div class="shortlist-actions">
         <button class="shortlist-button" id="viewShortlistButton" type="button">查看</button>
         <button class="shortlist-button primary" id="copyShortlistButton" type="button">复制编号</button>
+        <a class="shortlist-button" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">联系建站</a>
         <button class="shortlist-button" id="clearShortlistButton" type="button">清空</button>
       </div>
     </section>
@@ -2088,6 +2113,7 @@
       const resultKicker = document.querySelector("#resultKicker");
       const resultText = document.querySelector("#resultText");
       const resultCount = document.querySelector("#resultCount");
+      const industryNote = document.querySelector("#industryNote");
       const loadMoreWrap = document.querySelector("#loadMoreWrap");
       const loadMoreButton = document.querySelector("#loadMoreButton");
       const elementorCount = document.querySelector("#elementorCount");
@@ -2116,6 +2142,33 @@
 
       function findTemplate(itemId) {
         return templates.find((template) => template.itemId === itemId);
+      }
+
+      const industryInsights = {
+        all: "可以先从整体风格、页面结构和询盘路径判断方向，再把喜欢的 Demo 编号加入备选。后续落地时会根据企业资料替换内容、图片、表单和 SEO 信息。",
+        machinery: "机械设备网站建议重点展示设备参数、应用场景、生产能力、认证资质和询盘入口，适合做产品展示型 B2B 独立站。",
+        parts: "工业零部件网站建议突出型号分类、材料工艺、适配设备、批量供货能力和下载资料，方便采购客户快速判断是否匹配。",
+        building: "家居建材网站适合展示产品系列、安装效果、工程案例、材质细节和出口资质，让客户先看到应用场景，再进入询盘。",
+        electronics: "电子电器网站建议重点呈现产品规格、功能卖点、应用行业、认证信息和对比表，适合产品型号较多的企业。",
+        beauty: "美妆个护网站更适合强调品牌视觉、产品功效、包装展示、OEM/ODM 能力和合作流程，让页面更有品牌感。",
+        medical: "医疗器械网站需要突出合规资质、产品参数、使用场景、技术优势和资料下载，页面风格建议更专业克制。",
+        energy: "新能源网站适合展示解决方案、项目案例、核心设备、节能收益和服务流程，适合太阳能、储能、充电等业务。",
+        ecommerce: "跨境电商网站建议关注商品分类、购物流程、支付物流、促销区块和移动端体验，必要时会用到 WooCommerce。",
+        education: "教育培训网站适合突出课程体系、师资团队、学员案例、报名表单和信任背书，让客户快速理解服务价值。",
+        finance: "金融科技网站需要强调安全感、产品能力、数据展示、解决方案和预约咨询，视觉上建议更稳重。",
+        events: "活动会议网站适合展示议程、嘉宾、报名入口、场地信息和赞助权益，重点是让用户快速完成报名或咨询。",
+        food: "餐饮食品网站建议突出产品图片、菜单/品类、品牌故事、门店或批发合作信息，视觉需要更有食欲和可信度。",
+        automotive: "汽车交通网站适合展示车型/配件分类、服务能力、案例、参数和联系渠道，适合出口配件、维修服务或车队业务。",
+        creative: "创意服务网站适合展示案例作品、服务流程、团队能力和报价咨询，重点是让客户快速建立审美信任。",
+        services: "企业服务网站适合展示解决方案、服务流程、客户案例、团队资质和预约咨询，适合顾问、SaaS、代理服务等业务。",
+        business: "企业服务网站适合突出服务范围、流程、团队、客户案例和咨询入口，重点是让客户快速判断你能解决什么问题。",
+        other: "这个分类里的 Demo 风格更分散，可以先看视觉是否接近你的行业，再把合适编号加入备选，后续再按真实业务重组页面。"
+      };
+
+      function renderIndustryInsight(visibleCount = 0) {
+        const category = categoryName(state.category);
+        const insight = industryInsights[state.category] || industryInsights.other;
+        industryNote.innerHTML = `<strong>${escapeHtml(category)}</strong>：${escapeHtml(insight)} 当前筛选到 ${formatNumber.format(visibleCount)} 个可参考 Demo。`;
       }
 
       function saveShortlist() {
@@ -2357,6 +2410,7 @@
         resultKicker.textContent = currentCategory;
         resultText.textContent = `显示 ${formatNumber.format(rendered.length)} / ${formatNumber.format(visible.length)} 个模板`;
         resultCount.textContent = `${formatNumber.format(visible.length)} 个结果`;
+        renderIndustryInsight(visible.length);
         syncQuickFilters();
       }
 

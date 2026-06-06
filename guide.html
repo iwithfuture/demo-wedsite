@@ -500,6 +500,55 @@
         background: var(--brand-2);
       }
 
+      .flow-map {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        margin: 0 0 34px;
+      }
+
+      .flow-node {
+        position: relative;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 22px;
+        box-shadow: 0 14px 34px rgba(30, 63, 102, 0.06);
+      }
+
+      .flow-node:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 34px;
+        right: -10px;
+        width: 18px;
+        height: 1px;
+        background: var(--brand);
+      }
+
+      .flow-node span {
+        display: inline-flex;
+        margin-bottom: 12px;
+        color: var(--brand);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+      }
+
+      .flow-node strong {
+        display: block;
+        color: var(--ink);
+        font-size: 17px;
+        line-height: 1.35;
+      }
+
+      .flow-node p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
       .process {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -612,8 +661,18 @@
 
         .split,
         .compare,
+        .flow-map,
         .process {
           grid-template-columns: 1fr;
+        }
+
+        .flow-node:not(:last-child)::after {
+          top: auto;
+          right: auto;
+          left: 28px;
+          bottom: -7px;
+          width: 1px;
+          height: 14px;
         }
 
         .nav-links {
@@ -808,6 +867,34 @@
             <p class="section-copy">
               你只需要先选中接近需求的页面风格。后续我们会根据企业资料，把它调整成适合真实业务展示和询盘转化的网站。
             </p>
+          </div>
+
+          <div class="flow-map" aria-label="客户选择 Demo 后的网站落地流程">
+            <article class="flow-node reveal">
+              <span>01</span>
+              <strong>浏览 Demo</strong>
+              <p>先按行业和插件筛选，找到接近品牌、产品和客户场景的网站风格。</p>
+            </article>
+            <article class="flow-node reveal">
+              <span>02</span>
+              <strong>加入备选</strong>
+              <p>把喜欢的 Demo 加入备选，复制模板编号，方便后续快速定位。</p>
+            </article>
+            <article class="flow-node reveal">
+              <span>03</span>
+              <strong>发送编号</strong>
+              <p>把编号、截图或 Demo 链接发给我们，一起确认页面方向和功能需求。</p>
+            </article>
+            <article class="flow-node reveal">
+              <span>04</span>
+              <strong>提供资料</strong>
+              <p>准备 logo、产品图片、公司介绍、联系方式和需要展示的重点内容。</p>
+            </article>
+            <article class="flow-node reveal">
+              <span>05</span>
+              <strong>搭建上线</strong>
+              <p>我们把 Demo 方向落地到 WordPress，并完成内容、表单和移动端检查。</p>
+            </article>
           </div>
 
           <div class="process">
