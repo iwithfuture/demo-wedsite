@@ -351,8 +351,8 @@
       .market-head {
         position: relative;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 48px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-6);
         align-items: end;
         overflow: hidden;
         border: 1px solid #d7eaf8;
@@ -394,7 +394,7 @@
 
       h1 {
         margin: 0;
-        max-width: 720px;
+        max-width: 760px;
         color: var(--ink);
         font-size: 48px;
         line-height: 1.12;
@@ -403,7 +403,7 @@
       }
 
       .market-sub {
-        max-width: 720px;
+        max-width: 760px;
         margin: var(--space-4) 0 0;
         color: var(--text);
         font-size: 17px;
@@ -439,45 +439,6 @@
         border: 1px solid rgba(40, 114, 250, 0.24);
         background: #fff;
         color: var(--brand);
-      }
-
-      .stats-strip {
-        display: flex;
-        gap: var(--space-3);
-      }
-
-      .stat {
-        min-width: 118px;
-        border: 1px solid rgba(255, 255, 255, 0.86);
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.82);
-        padding: 18px;
-        backdrop-filter: blur(16px);
-        transition:
-          transform 180ms ease,
-          box-shadow 180ms ease,
-          border-color 180ms ease;
-      }
-
-      .stat:hover {
-        transform: translateY(-2px);
-        border-color: rgba(79, 195, 247, 0.42);
-        box-shadow: 0 18px 42px rgba(40, 114, 250, 0.12);
-      }
-
-      .stat strong {
-        display: block;
-        color: var(--ink);
-        font-size: 28px;
-        line-height: 1;
-        font-variant-numeric: tabular-nums;
-      }
-
-      .stat span {
-        display: block;
-        margin-top: var(--space-2);
-        color: var(--muted);
-        font-size: 12px;
       }
 
       .workspace {
@@ -1693,10 +1654,6 @@
           padding: var(--space-6);
         }
 
-        .stats-strip {
-          flex-wrap: wrap;
-        }
-
         .workspace {
           grid-template-columns: 1fr;
         }
@@ -1875,12 +1832,6 @@
           <div class="market-actions">
             <a class="hero-link primary" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo，咨询建站落地 →</a>
             <a class="hero-link secondary" href="guide.html">了解如何选择网站方案</a>
-          </div>
-        </div>
-        <div class="stats-strip" aria-label="模板统计">
-          <div class="stat">
-            <strong id="totalCount">0</strong>
-            <span>模板总数</span>
           </div>
         </div>
       </section>
@@ -2134,7 +2085,6 @@
       const grid = document.querySelector("#templates");
       const emptyState = document.querySelector("#emptyState");
       const searchInput = document.querySelector("#searchInput");
-      const totalCount = document.querySelector("#totalCount");
       const resultKicker = document.querySelector("#resultKicker");
       const resultText = document.querySelector("#resultText");
       const resultCount = document.querySelector("#resultCount");
@@ -2421,7 +2371,6 @@
       }
 
       function renderStats() {
-        totalCount.textContent = formatNumber.format(templates.length);
         elementorCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "Elementor")).length);
         elementorProCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "Elementor Pro")).length);
         wooCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "WooCommerce")).length);
