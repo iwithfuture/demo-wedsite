@@ -1159,14 +1159,6 @@
             <strong id="demoCount">0</strong>
             <span>真实 Demo</span>
           </div>
-          <div class="stat">
-            <strong id="readyCount">0</strong>
-            <span>已归档</span>
-          </div>
-          <div class="stat">
-            <strong id="pendingTop">0</strong>
-            <span>待归档</span>
-          </div>
         </div>
       </section>
 
@@ -1194,21 +1186,6 @@
               <span class="count" id="wooCount">0</span>
             </label>
           </section>
-          <section class="filter-block">
-            <p class="filter-title">文件</p>
-            <button class="status-button is-active" type="button" data-status="all">
-              <span>全部模板</span>
-              <span class="count" id="allStatusCount">0</span>
-            </button>
-            <button class="status-button" type="button" data-status="downloaded">
-              <span>已归档</span>
-              <span class="count" id="readyStatusCount">0</span>
-            </button>
-            <button class="status-button" type="button" data-status="pending">
-              <span>待归档</span>
-              <span class="count" id="pendingStatusCount">0</span>
-            </button>
-          </section>
         </aside>
 
         <section class="results">
@@ -1219,8 +1196,6 @@
                 <span class="result-text" id="resultText">正在加载模板</span>
               </div>
               <div class="quick-filters" aria-label="快速筛选">
-                <button class="quick-filter is-active" type="button" data-quick-status="all">全部</button>
-                <button class="quick-filter" type="button" data-quick-status="downloaded">已归档</button>
                 <button class="quick-filter" type="button" data-quick-tag="Elementor Pro">Elementor Pro</button>
                 <button class="quick-filter" type="button" data-quick-tag="WooCommerce">WooCommerce</button>
               </div>
@@ -1231,7 +1206,6 @@
                 <span>排序</span>
                 <select class="sort-select" id="sortSelect" aria-label="排序">
                   <option value="recommended">推荐优先</option>
-                  <option value="downloaded">已归档优先</option>
                   <option value="name">名称 A-Z</option>
                 </select>
               </label>
@@ -1271,7 +1245,6 @@
         query: "",
         tags: new Set(),
         sort: "recommended",
-        status: "all",
         visibleCount: 60,
       };
 
@@ -1281,17 +1254,12 @@
       const searchInput = document.querySelector("#searchInput");
       const sortSelect = document.querySelector("#sortSelect");
       const totalCount = document.querySelector("#totalCount");
-      const readyCount = document.querySelector("#readyCount");
       const demoCount = document.querySelector("#demoCount");
-      const pendingTop = document.querySelector("#pendingTop");
       const resultKicker = document.querySelector("#resultKicker");
       const resultText = document.querySelector("#resultText");
       const resultCount = document.querySelector("#resultCount");
       const loadMoreWrap = document.querySelector("#loadMoreWrap");
       const loadMoreButton = document.querySelector("#loadMoreButton");
-      const allStatusCount = document.querySelector("#allStatusCount");
-      const readyStatusCount = document.querySelector("#readyStatusCount");
-      const pendingStatusCount = document.querySelector("#pendingStatusCount");
       const elementorCount = document.querySelector("#elementorCount");
       const elementorProCount = document.querySelector("#elementorProCount");
       const wooCount = document.querySelector("#wooCount");
@@ -1396,17 +1364,12 @@
         const query = state.query.toLowerCase().trim();
         const queryMatch = !query || searchable.includes(query);
         const tagMatch = state.tags.size === 0 || [...state.tags].every((tag) => templateHasTag(template, tag));
-        const statusMatch =
-          state.status === "all" ||
-          (state.status === "downloaded" && template.downloaded) ||
-          (state.status === "pending" && !template.downloaded);
-        return categoryMatch && queryMatch && tagMatch && statusMatch;
+        return categoryMatch && queryMatch && tagMatch;
       }
 
       function sortTemplates(items) {
         return [...items].sort((a, b) => {
           if (state.sort === "name") return a.title.localeCompare(b.title);
-          if (state.sort === "downloaded") return Number(Boolean(b.downloaded)) - Number(Boolean(a.downloaded));
           return 0;
         });
       }
@@ -1425,7 +1388,6 @@
         grid.replaceChildren(
           ...rendered.map((template) => {
             const card = document.createElement("article");
-            const downloaded = Boolean(template.downloaded);
             const liveDemo = isExternalDemo(template);
             const demoUrl = normalizedDemoUrl(template);
             const downloadUrl = getLocalDownloadUrl(template);
@@ -1437,7 +1399,6 @@
                 <img src="${escapeHtml(template.image)}" alt="${escapeHtml(template.title)} 模板封面" loading="lazy">
                 <span class="badge-stack">
                   <span class="badge">${liveDemo ? "Live Demo" : "Demo"}</span>
-                  <span class="badge${downloaded ? "" : " is-muted"}">${downloaded ? "已归档" : "待整理"}</span>
                 </span>
                 <span class="hover-actions${canDownload ? "" : " has-one"}">
                   <span class="action primary">查看 Demo</span>
@@ -1453,10 +1414,12 @@
                 <div class="tags">
                   ${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
                 </div>
-                <div class="card-footer">
-                  <span class="file-status${downloaded ? "" : " is-pending"}">${downloaded ? "文件已归档" : "等待整理"}</span>
-                  ${canDownload ? `<a class="inline-link owner-only" href="${escapeHtml(downloadUrl)}" download>下载</a>` : ""}
-                </div>
+                ${canDownload ? `
+                  <div class="card-footer owner-only">
+                    <span class="file-status">管理下载</span>
+                    <a class="inline-link" href="${escapeHtml(downloadUrl)}" download>下载</a>
+                  </div>
+                ` : ""}
               </div>
             `;
             return card;
@@ -1473,9 +1436,6 @@
       }
 
       function syncQuickFilters() {
-        document.querySelectorAll("[data-quick-status]").forEach((button) => {
-          button.classList.toggle("is-active", button.dataset.quickStatus === state.status);
-        });
         document.querySelectorAll("[data-quick-tag]").forEach((button) => {
           button.classList.toggle("is-active", state.tags.has(button.dataset.quickTag));
         });
@@ -1486,16 +1446,9 @@
       }
 
       function renderStats() {
-        const downloaded = templates.filter((template) => template.downloaded).length;
         const demoReady = templates.filter(isExternalDemo).length;
-        const pending = templates.length - downloaded;
         totalCount.textContent = formatNumber.format(templates.length);
-        readyCount.textContent = formatNumber.format(downloaded);
         demoCount.textContent = formatNumber.format(demoReady);
-        pendingTop.textContent = formatNumber.format(pending);
-        allStatusCount.textContent = formatNumber.format(templates.length);
-        readyStatusCount.textContent = formatNumber.format(downloaded);
-        pendingStatusCount.textContent = formatNumber.format(pending);
         elementorCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "Elementor")).length);
         elementorProCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "Elementor Pro")).length);
         wooCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "WooCommerce")).length);
@@ -1512,26 +1465,6 @@
       document.addEventListener("click", (event) => {
         const categoryButton = event.target.closest("[data-category]");
         if (categoryButton) setCategory(categoryButton.dataset.category);
-
-        const statusButton = event.target.closest("[data-status]");
-        if (statusButton) {
-          state.status = statusButton.dataset.status;
-          resetVisibleCount();
-          document.querySelectorAll("[data-status]").forEach((button) => {
-            button.classList.toggle("is-active", button.dataset.status === state.status);
-          });
-          renderTemplates();
-        }
-
-        const quickStatusButton = event.target.closest("[data-quick-status]");
-        if (quickStatusButton) {
-          state.status = quickStatusButton.dataset.quickStatus;
-          resetVisibleCount();
-          document.querySelectorAll("[data-status]").forEach((button) => {
-            button.classList.toggle("is-active", button.dataset.status === state.status);
-          });
-          renderTemplates();
-        }
 
         const quickTagButton = event.target.closest("[data-quick-tag]");
         if (quickTagButton) {
