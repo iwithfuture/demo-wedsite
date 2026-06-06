@@ -565,6 +565,81 @@
         font-size: 14px;
       }
 
+      .basics-section {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: var(--space-5);
+        margin-bottom: var(--space-6);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(135deg, rgba(234, 245, 255, 0.88), rgba(255, 255, 255, 0.94)),
+          #fff;
+        padding: var(--space-6);
+        box-shadow: 0 12px 30px rgba(40, 114, 250, 0.08);
+      }
+
+      .basics-copy span {
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .basics-copy h2 {
+        margin: var(--space-2) 0 var(--space-3);
+        color: var(--ink);
+        font-size: 28px;
+        line-height: 1.25;
+      }
+
+      .basics-copy p {
+        margin: 0;
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.85;
+      }
+
+      .basics-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-4);
+      }
+
+      .basic-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.86);
+        padding: var(--space-5);
+      }
+
+      .basic-card h3 {
+        margin: 0 0 var(--space-2);
+        color: var(--ink);
+        font-size: 18px;
+      }
+
+      .basic-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .basic-card strong {
+        color: var(--ink);
+        font-weight: 900;
+      }
+
+      .basic-note {
+        margin-top: var(--space-3);
+        border-top: 1px solid var(--line-soft);
+        padding-top: var(--space-3);
+        color: var(--brand-dark);
+        font-weight: 800;
+      }
+
       .filters {
         position: sticky;
         top: 90px;
@@ -1230,6 +1305,11 @@
           grid-template-columns: 1fr;
         }
 
+        .basics-section,
+        .basics-grid {
+          grid-template-columns: 1fr;
+        }
+
         .market-head {
           grid-template-columns: 1fr;
           padding: var(--space-6);
@@ -1448,6 +1528,32 @@
           <article class="faq-item">
             <h3>选中 Demo 后下一步做什么？</h3>
             <p>记下模板编号或截图发给我们，再提供 logo、产品图片、公司介绍和联系方式，我们会帮助规划并落地对应页面。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="basics-section" aria-labelledby="pluginBasicsTitle">
+        <div class="basics-copy">
+          <span>Plugin Basics</span>
+          <h2 id="pluginBasicsTitle">新手先看：WooCommerce 和 Elementor Pro 是什么？</h2>
+          <p>
+            有些 Demo 会标注 WooCommerce 或 Elementor Pro，意思是落地网站时可能会用到对应插件能力。选 Demo 时不用先学技术，只要知道它们分别解决什么问题，以及是否会产生额外授权成本。
+          </p>
+        </div>
+        <div class="basics-grid">
+          <article class="basic-card">
+            <h3>WooCommerce</h3>
+            <p>
+              WooCommerce 是 WordPress 上常用的电商插件，用来搭建商品、购物车、结账、订单等商城功能。适合跨境电商、产品在线购买、报价型商品目录等网站。
+            </p>
+            <p class="basic-note">如果只是做企业展示站或询盘站，通常不一定需要它。</p>
+          </article>
+          <article class="basic-card">
+            <h3>Elementor Pro</h3>
+            <p>
+              Elementor 是 WordPress 的可视化页面编辑器。<strong>Elementor Pro 是付费版本</strong>，部分模板会用到它的表单、弹窗、主题构建、动态内容等高级组件。
+            </p>
+            <p class="basic-note">选到带 Pro 的 Demo 时，需要提前确认是否购买授权，或改成免费组件重做部分效果。</p>
           </article>
         </div>
       </section>
