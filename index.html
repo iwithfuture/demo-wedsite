@@ -1882,10 +1882,6 @@
             <strong id="totalCount">0</strong>
             <span>模板总数</span>
           </div>
-          <div class="stat">
-            <strong id="demoCount">0</strong>
-            <span>真实 Demo</span>
-          </div>
         </div>
       </section>
 
@@ -2139,7 +2135,6 @@
       const emptyState = document.querySelector("#emptyState");
       const searchInput = document.querySelector("#searchInput");
       const totalCount = document.querySelector("#totalCount");
-      const demoCount = document.querySelector("#demoCount");
       const resultKicker = document.querySelector("#resultKicker");
       const resultText = document.querySelector("#resultText");
       const resultCount = document.querySelector("#resultCount");
@@ -2426,9 +2421,7 @@
       }
 
       function renderStats() {
-        const demoReady = templates.filter(isExternalDemo).length;
         totalCount.textContent = formatNumber.format(templates.length);
-        demoCount.textContent = formatNumber.format(demoReady);
         elementorCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "Elementor")).length);
         elementorProCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "Elementor Pro")).length);
         wooCount.textContent = formatNumber.format(templates.filter((template) => templateHasTag(template, "WooCommerce")).length);
