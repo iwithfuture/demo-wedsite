@@ -1094,6 +1094,46 @@
         text-decoration: underline;
       }
 
+      .item-card.is-selected {
+        border-color: rgba(40, 114, 250, 0.48);
+        box-shadow: 0 16px 38px rgba(40, 114, 250, 0.15);
+      }
+
+      .template-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+      }
+
+      .card-button {
+        min-height: 36px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 900;
+        transition:
+          transform 150ms ease,
+          border-color 150ms ease,
+          background 150ms ease,
+          color 150ms ease;
+      }
+
+      .card-button:hover {
+        border-color: rgba(40, 114, 250, 0.32);
+        background: var(--brand-soft);
+        color: var(--brand-dark);
+        transform: translateY(-1px);
+      }
+
+      .card-button.is-selected {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: #fff;
+      }
+
       .owner-only {
         display: none;
       }
@@ -1151,6 +1191,17 @@
         to {
           opacity: 1;
           transform: translateY(0);
+        }
+      }
+
+      @keyframes shortlistEnter {
+        from {
+          opacity: 0;
+          transform: translate(-50%, 10px);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, 0);
         }
       }
 
@@ -1252,6 +1303,214 @@
         font-weight: 900;
         text-decoration: none;
         box-shadow: 0 18px 42px rgba(40, 114, 250, 0.28);
+      }
+
+      body.has-shortlist .floating-cta {
+        bottom: 92px;
+      }
+
+      .shortlist-bar {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        z-index: 70;
+        width: min(calc(100% - 32px), 760px);
+        display: none;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--space-3);
+        align-items: center;
+        border: 1px solid rgba(40, 114, 250, 0.2);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.94);
+        padding: var(--space-3);
+        box-shadow: 0 18px 48px rgba(33, 52, 77, 0.18);
+        backdrop-filter: blur(18px);
+        transform: translateX(-50%);
+      }
+
+      .shortlist-bar.is-visible {
+        display: grid;
+        animation: shortlistEnter 220ms ease both;
+      }
+
+      .shortlist-title {
+        margin: 0;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .shortlist-meta {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .shortlist-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .shortlist-button {
+        min-height: 38px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fff;
+        padding: 0 var(--space-3);
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .shortlist-button.primary {
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: #fff;
+      }
+
+      .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        display: none;
+        background: rgba(13, 27, 43, 0.42);
+        backdrop-filter: blur(6px);
+      }
+
+      .drawer-backdrop.is-open {
+        display: block;
+      }
+
+      .detail-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+        width: min(100%, 460px);
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        box-shadow: -24px 0 60px rgba(33, 52, 77, 0.18);
+        transform: translateX(102%);
+        transition: transform 240ms ease;
+      }
+
+      .detail-drawer.is-open {
+        transform: translateX(0);
+      }
+
+      .drawer-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        border-bottom: 1px solid var(--line);
+        padding: var(--space-4);
+      }
+
+      .drawer-kicker {
+        margin: 0;
+        color: var(--brand);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .drawer-close {
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--ink);
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .drawer-content {
+        overflow: auto;
+        padding: var(--space-4);
+      }
+
+      .drawer-image {
+        width: 100%;
+        aspect-ratio: 1.35 / 1;
+        overflow: hidden;
+        border-radius: var(--radius);
+        background: #dfe8f2;
+      }
+
+      .drawer-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      .drawer-title {
+        margin: var(--space-4) 0 var(--space-2);
+        color: var(--ink);
+        font-size: 24px;
+        line-height: 1.25;
+      }
+
+      .drawer-desc {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+
+      .detail-list {
+        display: grid;
+        gap: var(--space-3);
+        margin: var(--space-4) 0;
+      }
+
+      .detail-row {
+        display: grid;
+        grid-template-columns: 86px minmax(0, 1fr);
+        gap: var(--space-3);
+        border-top: 1px solid var(--line-soft);
+        padding-top: var(--space-3);
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .detail-row span:first-child {
+        color: var(--muted);
+      }
+
+      .drawer-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2);
+        margin-top: var(--space-4);
+      }
+
+      .drawer-action {
+        min-height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .drawer-action.primary {
+        border: 0;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: #fff;
+      }
+
+      .drawer-action.secondary {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--brand-dark);
       }
 
       @media (max-width: 1320px) {
@@ -1403,6 +1662,32 @@
           left: var(--space-4);
           right: var(--space-4);
           bottom: var(--space-4);
+        }
+
+        body.has-shortlist .floating-cta {
+          bottom: 128px;
+        }
+
+        .shortlist-bar {
+          bottom: var(--space-4);
+          grid-template-columns: 1fr;
+        }
+
+        .shortlist-actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .shortlist-button {
+          padding: 0 var(--space-2);
+        }
+
+        .detail-drawer {
+          width: 100%;
+        }
+
+        .drawer-actions {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -1594,11 +1879,44 @@
 
     <a class="floating-cta" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo？咨询落地</a>
 
+    <section class="shortlist-bar" id="shortlistBar" aria-live="polite">
+      <div>
+        <p class="shortlist-title">已选 <span id="shortlistCount">0</span> 个 Demo</p>
+        <p class="shortlist-meta" id="shortlistMeta">复制模板编号发给我们，方便快速定位方案。</p>
+      </div>
+      <div class="shortlist-actions">
+        <button class="shortlist-button" id="viewShortlistButton" type="button">查看</button>
+        <button class="shortlist-button primary" id="copyShortlistButton" type="button">复制编号</button>
+        <button class="shortlist-button" id="clearShortlistButton" type="button">清空</button>
+      </div>
+    </section>
+
+    <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+    <aside class="detail-drawer" id="detailDrawer" aria-label="模板详情" aria-hidden="true">
+      <div class="drawer-head">
+        <p class="drawer-kicker">Template Detail</p>
+        <button class="drawer-close" id="drawerClose" type="button" aria-label="关闭详情">×</button>
+      </div>
+      <div class="drawer-content" id="drawerContent"></div>
+    </aside>
+
     <script>
       let categories = [{ id: "all", name: "全部模板" }];
       let templates = [];
+      let activeDrawerId = "";
       const isOwnerMode = new URLSearchParams(location.search).get("admin") === "1";
       document.body.classList.toggle("is-owner", isOwnerMode);
+
+      function loadSavedShortlist() {
+        try {
+          const saved = JSON.parse(localStorage.getItem("templateShortlist") || "[]");
+          return Array.isArray(saved) ? saved : [];
+        } catch {
+          return [];
+        }
+      }
+
+      const selectedIds = new Set(loadSavedShortlist());
 
       const state = {
         category: location.hash.replace("#", "") || "all",
@@ -1621,6 +1939,16 @@
       const elementorCount = document.querySelector("#elementorCount");
       const elementorProCount = document.querySelector("#elementorProCount");
       const wooCount = document.querySelector("#wooCount");
+      const shortlistBar = document.querySelector("#shortlistBar");
+      const shortlistCount = document.querySelector("#shortlistCount");
+      const shortlistMeta = document.querySelector("#shortlistMeta");
+      const viewShortlistButton = document.querySelector("#viewShortlistButton");
+      const copyShortlistButton = document.querySelector("#copyShortlistButton");
+      const clearShortlistButton = document.querySelector("#clearShortlistButton");
+      const drawerBackdrop = document.querySelector("#drawerBackdrop");
+      const detailDrawer = document.querySelector("#detailDrawer");
+      const drawerContent = document.querySelector("#drawerContent");
+      const drawerClose = document.querySelector("#drawerClose");
       const formatNumber = new Intl.NumberFormat("zh-CN");
 
       function escapeHtml(value = "") {
@@ -1630,6 +1958,92 @@
           .replaceAll(">", "&gt;")
           .replaceAll('"', "&quot;")
           .replaceAll("'", "&#039;");
+      }
+
+      function findTemplate(itemId) {
+        return templates.find((template) => template.itemId === itemId);
+      }
+
+      function saveShortlist() {
+        localStorage.setItem("templateShortlist", JSON.stringify([...selectedIds]));
+      }
+
+      function renderShortlist() {
+        const selectedTemplates = [...selectedIds].map(findTemplate).filter(Boolean);
+        const count = selectedTemplates.length;
+        shortlistCount.textContent = count;
+        shortlistMeta.textContent = count
+          ? selectedTemplates.map((template) => template.itemId).join(" / ")
+          : "复制模板编号发给我们，方便快速定位方案。";
+        shortlistBar.classList.toggle("is-visible", count > 0);
+        document.body.classList.toggle("has-shortlist", count > 0);
+      }
+
+      function toggleShortlist(itemId) {
+        if (selectedIds.has(itemId)) selectedIds.delete(itemId);
+        else selectedIds.add(itemId);
+        saveShortlist();
+        renderShortlist();
+        renderTemplates();
+        if (activeDrawerId === itemId) openTemplateDrawer(itemId);
+      }
+
+      async function copyShortlist() {
+        const selectedTemplates = [...selectedIds].map(findTemplate).filter(Boolean);
+        const text = selectedTemplates
+          .map((template, index) => `${index + 1}. ${template.itemId} - ${template.title}`)
+          .join("\n");
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyShortlistButton.textContent = "已复制";
+        } catch {
+          copyShortlistButton.textContent = "复制失败";
+        }
+        window.setTimeout(() => {
+          copyShortlistButton.textContent = "复制编号";
+        }, 1500);
+      }
+
+      function closeTemplateDrawer() {
+        detailDrawer.classList.remove("is-open");
+        drawerBackdrop.classList.remove("is-open");
+        detailDrawer.setAttribute("aria-hidden", "true");
+        drawerBackdrop.hidden = true;
+        activeDrawerId = "";
+      }
+
+      function openTemplateDrawer(itemId) {
+        const template = findTemplate(itemId);
+        if (!template) return;
+        const tags = template.tags || [];
+        const modules = template.modules || [];
+        const demoUrl = normalizedDemoUrl(template);
+        const selected = selectedIds.has(itemId);
+        activeDrawerId = itemId;
+        drawerContent.innerHTML = `
+          <div class="drawer-image">
+            <img src="${escapeHtml(template.image)}" alt="${escapeHtml(template.title)} 模板封面">
+          </div>
+          <h2 class="drawer-title">${escapeHtml(template.title)}</h2>
+          <p class="drawer-desc">${escapeHtml(template.description || "这个 Demo 可作为网站视觉风格和页面结构参考。")}</p>
+          <div class="detail-list">
+            <div class="detail-row"><span>模板编号</span><strong>${escapeHtml(template.itemId)}</strong></div>
+            <div class="detail-row"><span>适合行业</span><strong>${escapeHtml(template.suitableFor || categoryName(template.category))}</strong></div>
+            <div class="detail-row"><span>插件标签</span><strong>${escapeHtml(tags.join(" / ") || "Template Kit")}</strong></div>
+            <div class="detail-row"><span>页面模块</span><strong>${escapeHtml(modules.join(" / ") || "首页 / 关于 / 服务 / 联系")}</strong></div>
+          </div>
+          <div class="drawer-actions">
+            <a class="drawer-action primary" href="${escapeHtml(demoUrl)}" target="_blank" rel="noreferrer">查看 Demo</a>
+            <button class="drawer-action secondary" type="button" data-shortlist="${escapeHtml(template.itemId)}">${selected ? "移出备选" : "加入备选"}</button>
+          </div>
+        `;
+        drawerBackdrop.hidden = false;
+        requestAnimationFrame(() => {
+          detailDrawer.classList.add("is-open");
+          drawerBackdrop.classList.add("is-open");
+          detailDrawer.setAttribute("aria-hidden", "false");
+        });
       }
 
       async function loadTemplateData() {
@@ -1744,7 +2158,9 @@
             const downloadUrl = getLocalDownloadUrl(template);
             const canDownload = isOwnerMode && downloadUrl;
             const tags = (template.tags || []).slice(0, 2);
-            card.className = "item-card";
+            const selected = selectedIds.has(template.itemId);
+            card.className = `item-card${selected ? " is-selected" : ""}`;
+            card.dataset.templateId = template.itemId;
             card.innerHTML = `
               <a class="preview" href="${escapeHtml(demoUrl)}" target="_blank" rel="noreferrer" aria-label="打开 ${escapeHtml(template.title)} Demo">
                 <img src="${escapeHtml(template.image)}" alt="${escapeHtml(template.title)} 模板封面" loading="lazy">
@@ -1764,6 +2180,10 @@
                 <h2 class="title">${escapeHtml(template.title)}</h2>
                 <div class="tags">
                   ${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
+                </div>
+                <div class="template-actions">
+                  <button class="card-button" type="button" data-detail="${escapeHtml(template.itemId)}">查看详情</button>
+                  <button class="card-button${selected ? " is-selected" : ""}" type="button" data-shortlist="${escapeHtml(template.itemId)}">${selected ? "已加入" : "加入备选"}</button>
                 </div>
                 ${canDownload ? `
                   <div class="card-footer owner-only">
@@ -1828,6 +2248,16 @@
           resetVisibleCount();
           renderTemplates();
         }
+
+        const detailButton = event.target.closest("[data-detail]");
+        if (detailButton) {
+          openTemplateDrawer(detailButton.dataset.detail);
+        }
+
+        const shortlistButton = event.target.closest("[data-shortlist]");
+        if (shortlistButton) {
+          toggleShortlist(shortlistButton.dataset.shortlist);
+        }
       });
 
       searchInput.addEventListener("input", (event) => {
@@ -1848,6 +2278,28 @@
       loadMoreButton.addEventListener("click", () => {
         state.visibleCount += 60;
         renderTemplates();
+      });
+
+      viewShortlistButton.addEventListener("click", () => {
+        const firstSelected = [...selectedIds].find(findTemplate);
+        if (firstSelected) openTemplateDrawer(firstSelected);
+      });
+
+      copyShortlistButton.addEventListener("click", copyShortlist);
+
+      clearShortlistButton.addEventListener("click", () => {
+        selectedIds.clear();
+        saveShortlist();
+        renderShortlist();
+        renderTemplates();
+        closeTemplateDrawer();
+      });
+
+      drawerClose.addEventListener("click", closeTemplateDrawer);
+      drawerBackdrop.addEventListener("click", closeTemplateDrawer);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeTemplateDrawer();
       });
 
       document.addEventListener("pointermove", (event) => {
@@ -1892,6 +2344,7 @@
         }
         renderStats();
         renderCategories();
+        renderShortlist();
         renderTemplates();
       }
 
