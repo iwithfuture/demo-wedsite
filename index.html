@@ -217,6 +217,12 @@
         box-shadow: 0 16px 34px rgba(40, 114, 250, 0.22);
       }
 
+      .nav-link.is-ghost {
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: none;
+      }
+
       .nav-link:hover {
         transform: translateY(-1px);
       }
@@ -324,6 +330,36 @@
         line-height: 1.85;
       }
 
+      .market-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-top: var(--space-6);
+      }
+
+      .hero-link {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        padding: 0 var(--space-5);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .hero-link.primary {
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        box-shadow: 0 18px 42px rgba(40, 114, 250, 0.24);
+      }
+
+      .hero-link.secondary {
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
       .stats-strip {
         display: flex;
         gap: var(--space-3);
@@ -368,6 +404,51 @@
         grid-template-columns: 270px minmax(0, 1fr);
         gap: var(--space-6);
         align-items: start;
+      }
+
+      .growth-flow {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+      }
+
+      .flow-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.92);
+        padding: var(--space-5);
+        box-shadow: 0 14px 34px rgba(30, 63, 102, 0.06);
+      }
+
+      .flow-card span {
+        color: var(--brand);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .flow-card h2 {
+        margin: var(--space-2) 0 var(--space-2);
+        color: var(--ink);
+        font-size: 20px;
+        line-height: 1.32;
+      }
+
+      .flow-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .flow-card a {
+        display: inline-flex;
+        margin-top: var(--space-3);
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 900;
+        text-decoration: none;
       }
 
       .filters {
@@ -990,6 +1071,25 @@
         text-decoration: underline;
       }
 
+      .floating-cta {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 60;
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius);
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        padding: 0 var(--space-5);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
+        box-shadow: 0 18px 42px rgba(40, 114, 250, 0.28);
+      }
+
       @media (max-width: 1320px) {
         .grid {
           grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -998,7 +1098,18 @@
 
       @media (max-width: 1040px) {
         .topbar-inner {
-          grid-template-columns: 230px minmax(260px, 1fr);
+          grid-template-columns: 1fr;
+          padding-top: var(--space-3);
+          padding-bottom: var(--space-3);
+        }
+
+        .top-actions {
+          justify-content: flex-start;
+          flex-wrap: wrap;
+        }
+
+        .growth-flow {
+          grid-template-columns: 1fr;
         }
 
         .market-head {
@@ -1055,6 +1166,14 @@
 
         .market-sub {
           font-size: 14px;
+        }
+
+        .market-actions {
+          flex-direction: column;
+        }
+
+        .hero-link {
+          width: 100%;
         }
 
         .tabs-bar {
@@ -1114,6 +1233,12 @@
         .footer-links {
           justify-content: flex-start;
         }
+
+        .floating-cta {
+          left: var(--space-4);
+          right: var(--space-4);
+          bottom: var(--space-4);
+        }
       }
     </style>
   </head>
@@ -1138,6 +1263,8 @@
 
         <div class="top-actions">
           <span class="owner-badge owner-only">管理模式</span>
+          <a class="nav-link is-ghost" href="https://iwithfuture.com/" target="_blank" rel="noreferrer">博客</a>
+          <a class="nav-link is-ghost" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">建站服务</a>
           <a class="nav-link" href="guide.html">使用教程</a>
         </div>
       </div>
@@ -1149,6 +1276,10 @@
           <p class="breadcrumb">WordPress / Template Kits</p>
           <h1>外贸网站模板</h1>
           <p class="market-sub">按行业浏览不同风格的网站方案，先查看真实 Demo 效果，再选择适合品牌、产品和获客场景的页面设计。</p>
+          <div class="market-actions">
+            <a class="hero-link primary" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo，咨询建站落地 →</a>
+            <a class="hero-link secondary" href="guide.html">了解如何选择网站方案</a>
+          </div>
         </div>
         <div class="stats-strip" aria-label="模板统计">
           <div class="stat">
@@ -1160,6 +1291,27 @@
             <span>真实 Demo</span>
           </div>
         </div>
+      </section>
+
+      <section class="growth-flow" aria-label="服务路径">
+        <article class="flow-card">
+          <span>01 / Learn</span>
+          <h2>先从博客了解外贸获客</h2>
+          <p>通过独立站、SEO、阿里国际站和营销工具内容，判断适合自己的增长方向。</p>
+          <a href="https://iwithfuture.com/" target="_blank" rel="noreferrer">访问 iwithfuture.com</a>
+        </article>
+        <article class="flow-card">
+          <span>02 / Service</span>
+          <h2>再了解建站与增长服务</h2>
+          <p>服务站会说明 AI 建站、WordPress、Shopify、SEO 和获客系统如何配合。</p>
+          <a href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">查看建站服务</a>
+        </article>
+        <article class="flow-card">
+          <span>03 / Demo</span>
+          <h2>最后在这里选择网站风格</h2>
+          <p>选中喜欢的 Demo 后，把模板编号发给我们，再根据企业资料落地到 WordPress。</p>
+          <a href="#templates">浏览行业 Demo</a>
+        </article>
       </section>
 
       <div class="workspace">
@@ -1228,11 +1380,15 @@
           <p class="footer-note">模板用于 WordPress / Elementor 建站选型，客户确认 Demo 后可按模板编号安排导入。</p>
         </div>
         <nav class="footer-links" aria-label="页脚链接">
-          <a href="guide.html">使用教程</a>
+          <a href="https://iwithfuture.com/" target="_blank" rel="noreferrer">外贸博客</a>
+          <a href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">建站服务</a>
+          <a href="guide.html">如何选择方案</a>
           <a href="index.html#all">全部模板</a>
         </nav>
       </div>
     </footer>
+
+    <a class="floating-cta" href="https://ai.iwithfuture.com/" target="_blank" rel="noreferrer">选好 Demo？咨询落地</a>
 
     <script>
       let categories = [{ id: "all", name: "全部模板" }];
