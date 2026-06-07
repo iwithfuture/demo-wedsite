@@ -2040,7 +2040,6 @@
                 <button class="quick-filter" type="button" data-intent="ecommerce">跨境电商</button>
                 <button class="quick-filter" type="button" data-intent="brand">品牌官网</button>
                 <button class="quick-filter" type="button" data-intent="booking">预约服务</button>
-                <button class="quick-filter" type="button" data-intent="multilingual">多语言网站</button>
               </div>
             </div>
             <div class="result-tools">
@@ -2374,11 +2373,6 @@
           label: "预约服务",
           note: "优先看预约、联系表单、服务介绍和团队展示，适合本地服务、医疗、美业、顾问类网站。",
           match: (template) => template.category === "services" || /booking|appointment|clinic|salon|service/i.test([template.title, template.description, template.suitableFor].join(" ")) || hasModule(template, ["联系表单", "服务介绍", "团队"]),
-        },
-        multilingual: {
-          label: "多语言网站",
-          note: "多语言主要取决于后期 WordPress 落地时是否配置 WPML，这里可先按行业和页面风格挑选 Demo。",
-          match: () => true,
         },
       };
 
