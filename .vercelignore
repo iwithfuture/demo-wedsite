@@ -22,6 +22,7 @@ data/*.out.log
 
 # 本地检查截图
 *.png
+!assets/logos/wpml.png
 
 # 系统文件
 Thumbs.db
